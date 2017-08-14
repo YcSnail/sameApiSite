@@ -80,6 +80,18 @@ class IndexController extends Controller {
 
     public function HA023(){
 
+//        $this->display('Test/Index');
+//        die();
+        /**
+         *
+            $lastNum = empty($_GET['lastNum']) ?  $_POST['lastNum'] : $_GET['lastNum'];
+            if ( empty($lastNum)  ){
+            echo '上次读数不能为空';
+            die();
+            }
+         */
+
+        $this->assign('h22code','00009');
         $this->display();
     }
 
@@ -98,7 +110,7 @@ class IndexController extends Controller {
         if ($_POST['code'] == 'EmpValidate'){
             $parames['code'] = 'EmpValidate';
             $parames['gname'] = $_POST['gname'];
-        }
+        }else
 
         // 获取是否存在 cookie
         if ($_POST['code'] == 'getCookie' ){
@@ -109,10 +121,10 @@ class IndexController extends Controller {
             }
 
             ajaxRes(-1,'not cookie');
-        }
+        }else
 
         // APPHA022_1 保存 访客信息
-        if ($_POST['code'] == 'APPHA022_1' ){
+        if ($_POST['code'] == 'APPHA022_1'){
 
             $parames['h22name'] = $_POST['h22company'];
             $parames['h22company'] = $_POST['h22company'];
@@ -126,10 +138,39 @@ class IndexController extends Controller {
             $parames['h22emptel'] = $_POST['h22emptel'];
             $parames['h22code'] = $_POST['h22code'];
 
-            $parames['code'] = 'APPHA022_1';
+            $parames['code'] = 'APPHA023_1';
 
             $this->svavCookie($parames);
+        }else
+
+        // 设备获取最近一条记录
+        if ($_POST['code'] == 'APPHA023_5'){
+
+            $parames['h23code'] = $_POST['h23code'];
+            $parames['code'] = 'APPHA023_1';
+        }else
+
+        //保存设备记录
+        if ($_POST['code'] == 'APPHA023_1'){
+
+            $parames['code'] = $_POST['code'];
+            $parames['h23code'] = $_POST['h23code'];
+            $parames['h23desc'] = $_POST['h23desc'];
+            $parames['h23date'] = $_POST['h23date'];
+
+            $parames['h23nums'] = $_POST['h23nums'];
+            $parames['h23empid'] = $_POST['h23empid'];
+            $parames['h23empname'] = $_POST['h23empname'];
+            $parames['h23type'] = $_POST['h23type'];
+        }else
+
+            //获取 最近保存的5条记录
+        if ($_POST['code'] == 'APPHA023_3'){
+
+            $parames['code'] = $_POST['APPHA023_3'];
+            $parames['h23code'] = $_POST['h23code'];
         }
+
 
         $IndexLogic = D('Index','Logic');
         $dataRes = $IndexLogic->_getSoapData($parames);
