@@ -64,6 +64,10 @@
                         <label>备注</label>
                         <textarea id="textarea" rows="5" placeholder="请输入备注"></textarea>
                     </div>
+                    <div class="mui-input-row" style="display: none">
+                        <label>拜访人手机号</label>
+                        <input type="text" class="mui-input-clear" placeholder="请输入拜访人手机号">
+                    </div>
 
                     <div class="mui-button-row">
                         <button type="button" class="mui-btn mui-btn-primary" >确认</button>
@@ -82,6 +86,7 @@
 
     $().ready(function () {
 
+
         /**
          * 日期选择
          */
@@ -91,13 +96,38 @@
                 type: "datetime",//设置日历初始视图模式
                 beginDate: new Date(2017, 06, 01),//设置开始日期
                 endDate: new Date(2099, 12, 31),//设置结束日期
-                labels: ['年', '月', '日', '时', '分'],//设置默认标签区域提示语
+                labels: ['年', '月', '日', '时', '分']//设置默认标签区域提示语
             });
 
             dtpicker.show(function (items) {
                 $("#Time").val(items.value);
             });
         });
+
+
+        getCookie();
+
+        // 获取是否有cookie
+        function getCookie() {
+            url =  "{:U('Index/ajax')}";
+            mui.post(
+                url,
+                {'code':'getCookie'},
+                function(data){
+                    if (data.code==0){
+                        for (i=1;i<=9;i++){
+                            if (i ==8 ){
+                                $('.mui-input-group > .mui-input-row:eq('+i+') > textarea').val(data.message.i);
+                            }else{
+                                $('.mui-input-group > .mui-input-row:eq('+i+') > input').val(data.message.i);
+                            }
+                        }
+                    }
+                }
+            );
+
+        }
+
 
         var h22code = $('.mui-input-group > .mui-input-row:eq(0) > input').val();
 
@@ -126,8 +156,10 @@
                         return;
                     }
 
+                    $('.mui-input-group > .mui-input-row:eq(9) > input').val(data.message.GTEL);
+
                     // 保存数据
-                    saveData(data.message.GTEL);
+                    saveData();
                 },'json'
 
             );
@@ -137,7 +169,7 @@
 
 
         // 保存数据
-        function saveData(tel) {
+        function saveData() {
 
             var h22code = $('.mui-input-group > .mui-input-row:eq(0) > input').val();
 
@@ -154,16 +186,17 @@
                 url,
                 {
                     'code':'APPHA022_1',
-                    'h22name':dataArr[0],
-                    'h22company':dataArr[1],
-                    'h22tel':dataArr[2],
-                    'h22visitdate':dataArr[3],
-                    'h22peoplecnt':dataArr[4],
-                    'h22vehicleno':dataArr[5],
-                    'h22empname':dataArr[6], // 拜访人姓名
-                    'h22memo': dataArr[7],
-                    'h22emptel':tel, // 拜访人手机号
-                    'h22code':h22code
+                    'h22code':dataArr[0],
+                    'h22name':dataArr[1],
+                    'h22company':dataArr[2],
+                    'h22tel':dataArr[3],
+                    'h22visitdate':dataArr[4],
+                    'h22peoplecnt':dataArr[5],
+                    'h22vehicleno':dataArr[6],
+                    'h22empname':dataArr[7], // 拜访人姓名
+                    'h22memo': dataArr[8],
+                    'h22emptel':dataArr[9] // 拜访人手机号
+
                 },function(data){
 
                     if (data.code == 0){
@@ -182,7 +215,7 @@
         function forData() {
 
             var dataArr = Array();
-            for (i=1;i<9;i++){
+            for (i=1;i<=9;i++){
 
                 if (i ==8 ){
                     dataArr[i] = $('.mui-input-group > .mui-input-row:eq('+i+') > textarea').val();

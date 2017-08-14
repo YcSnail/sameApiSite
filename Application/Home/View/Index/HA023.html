@@ -98,17 +98,13 @@
         mui.post(
             url,
             {
-                'code':'APPHA022_1',
-                'h22name':dataArr[0],
-                'h22company':dataArr[1],
-                'h22tel':dataArr[2],
-                'h22visitdate':dataArr[3],
-                'h22peoplecnt':dataArr[4],
-                'h22vehicleno':dataArr[5],
-                'h22empname':dataArr[6], // 拜访人姓名
-                'h22memo': dataArr[7],
-                'h22emptel':tel, // 拜访人手机号
-                'h22code':h22code
+
+                'code':'APPHA023_1',
+                'h23type':dataArr[0],
+                'h23desc':dataArr[1],
+                'h23nums':dataArr[2],
+                'h23date':dataArr[3]
+
             },function(data){
 
                 if (data.code == 0){

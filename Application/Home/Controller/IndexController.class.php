@@ -66,6 +66,7 @@ class IndexController extends Controller {
          * APPHA022_1   保存 访客信息
          */
 
+
         $this->assign('h22code','1365651');
         $this->display();
     }
@@ -78,6 +79,7 @@ class IndexController extends Controller {
     }
 
     public function HA023(){
+
         $this->display();
     }
 
@@ -98,10 +100,20 @@ class IndexController extends Controller {
             $parames['gname'] = $_POST['gname'];
         }
 
+        // 获取是否存在 cookie
+        if ($_POST['code'] == 'getCookie' ){
+
+            if (!empty($_COOKIE['userData'])){
+                $userData = json_decode($_COOKIE['userData'],true);
+                ajaxRes(0,$userData);
+            }
+
+            ajaxRes(-1,'not cookie');
+        }
+
         // APPHA022_1 保存 访客信息
         if ($_POST['code'] == 'APPHA022_1' ){
 
-            $parames['code'] = 'APPHA022_1';
             $parames['h22name'] = $_POST['h22company'];
             $parames['h22company'] = $_POST['h22company'];
             $parames['h22tel'] = $_POST['h22tel'];
@@ -112,8 +124,11 @@ class IndexController extends Controller {
             $parames['h22empname'] = $_POST['h22empname'];
             $parames['h22memo'] = $_POST['h22memo'];
             $parames['h22emptel'] = $_POST['h22emptel'];
-
             $parames['h22code'] = $_POST['h22code'];
+
+            $parames['code'] = 'APPHA022_1';
+
+            $this->svavCookie($parames);
         }
 
         $IndexLogic = D('Index','Logic');
@@ -121,5 +136,27 @@ class IndexController extends Controller {
 
         ajaxRes($dataRes,'',1);
     }
+
+    /**
+     * 设置cookie
+     * @param $data
+     */
+    public function svavCookie($data){
+
+        if (empty($data)){
+            return;
+        }
+
+        $saveDate = array_values($data);
+
+        if (empty($saveDate)){
+            return;
+        }
+
+        // 设置 1年有效期
+        setcookie('userData',$saveDate, time() + 1 * 365 * 24 * 3600);
+    }
+
+
 
 }
