@@ -96,31 +96,6 @@
 
     $().ready(function () {
 
-        // 获取是否有cookie
-        url =  "<?php echo U('Index/ajax');?>";
-        mui.post(
-            url,
-            {
-                'code':'getCookie'
-            },function(data){
-
-                if (data.code==0){
-
-                    for (i=1;i<9;i++){
-
-                        if (i ==8 ){
-                            $('.mui-input-group > .mui-input-row:eq('+i+') > textarea').val(data.message.i);
-                        }else{
-                            $('.mui-input-group > .mui-input-row:eq('+i+') > input').val(data.message.i);
-                        }
-
-                    }
-
-                }
-
-
-            }
-        );
 
         /**
          * 日期选择
@@ -138,6 +113,31 @@
                 $("#Time").val(items.value);
             });
         });
+
+
+        getCookie();
+
+        // 获取是否有cookie
+        function getCookie() {
+            url =  "<?php echo U('Index/ajax');?>";
+            mui.post(
+                url,
+                {'code':'getCookie'},
+                function(data){
+                    if (data.code==0){
+                        for (i=1;i<=9;i++){
+                            if (i ==8 ){
+                                $('.mui-input-group > .mui-input-row:eq('+i+') > textarea').val(data.message.i);
+                            }else{
+                                $('.mui-input-group > .mui-input-row:eq('+i+') > input').val(data.message.i);
+                            }
+                        }
+                    }
+                }
+            );
+
+        }
+
 
         var h22code = $('.mui-input-group > .mui-input-row:eq(0) > input').val();
 

@@ -45,7 +45,7 @@ class IndexController extends Controller {
     /**
      * 访客登记
      */
-    public function visitor(){
+    public function HA022(){
 
         // 获取 门禁编号
         /**
@@ -95,6 +95,14 @@ class IndexController extends Controller {
         $this->display();
     }
 
+
+    /**
+     * 泡棉上架
+     */
+    public function shelves(){
+
+        $this->display();
+    }
 
     /**
      * 调用数据库数据
