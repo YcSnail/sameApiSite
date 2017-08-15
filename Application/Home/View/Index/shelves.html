@@ -31,6 +31,9 @@
         color: #fff;
     }
 
+    p{
+        color: #000;
+    }
 
 
 
@@ -43,8 +46,17 @@
         color: #007aff;
     }
 
+    .show-span{
+        color: #fff;
+        padding: 4px;
+        background: #14c500;
+        margin-left: 6px;
+    }
 
-
+    .show-div{
+        margin-top: 6px;
+        border-top: 1px solid #dacccc;
+    }
 
 
 </style>
@@ -119,10 +131,25 @@
                         </li>
                     </ul>
 
-                    <div class="mui-button-row">
-                        <button type="button" class="mui-btn mui-btn-primary" >扫描</button>
-                    </div>
+                <div class="mui-input-row">
+                    <label>卷号</label>
+                    <input type="text" class="mui-input-clear" placeholder="扫描添加">
+                </div>
 
+                <div class="mui-button-row">
+                    <button type="button" class="mui-btn mui-btn-primary" >扫描</button>
+                </div>
+
+                <div class="show-div">
+                    <div class="mui-input-row">
+                        <label>卷号</label>
+                        <p><span>165165</span> <span class="show-span">3</span> </p>
+                    </div>
+                    <div class="mui-input-row">
+                        <label>卷号</label>
+                        <p><span>165168</span> <span class="show-span">16</span> </p>
+                    </div>
+                </div>
 
                     <div class="mui-button-row">
                         <button type="button" class="mui-btn mui-btn-primary" >上架保存</button>
