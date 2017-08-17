@@ -1,7 +1,7 @@
 <include file="Public/headerM" />
 <link href="__PUBLIC__/mui/css/miu.picker.min.css" rel="stylesheet">
 <script src="__PUBLIC__/mui/js/miu.picker.min.js"></script>
-<title>泡棉上架</title>
+<title>泡棉查询</title>
 
 <style>
     .mui-btn-primary{
@@ -63,7 +63,7 @@
 
 <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-pull-left"></a>
-    <h1 class="mui-title">泡棉上架</h1>
+    <h1 class="mui-title">泡棉查询</h1>
 </header>
 
 <div class="mui-content">
@@ -81,79 +81,31 @@
                     </div>
                 </form>
 
-                    <div class="mui-button-row">
-                        <button type="button" class="mui-btn mui-btn-primary" >查询</button>
-                    </div>
-
-                    <table>
-                        <tbody class="table-tbody">
-                            <tr class="table-tbody-tr" align="center">
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>6</td>
-                                <td>7</td>
-                                <td>8</td>
-                                <td>9</td>
-                                <td>10</td>
-                            </tr>
-                            <tr class="table-tbody-tr" align="center">
-                                <td>11</td>
-                                <td>12</td>
-                                <td>13</td>
-                                <td>14</td>
-                                <td>15</td>
-                                <td>16</td>
-                                <td>17</td>
-                                <td>18</td>
-                                <td>19</td>
-                                <td>20</td>
-                            </tr>
-
-                            <tr class="table-tbody-tr" align="center">
-                                <td>21</td>
-                                <td>22</td>
-                                <td>23</td>
-                                <td>24</td>
-                                <td>25</td>
-                                <td>26</td>
-                                <td>27</td>
-                            </tr>
-                        </tbody>
-
-                    </table>
-
-                    <ul class="mui-table-view">
-                        <li class="mui-table-view-cell ul-li-text">
-                            可存放数 <span>0</span>
-                        </li>
-                    </ul>
-
-                <div class="mui-input-row">
-                    <label>卷号</label>
-                    <input type="text" class="mui-input-clear" placeholder="扫描添加">
-                </div>
-
                 <div class="mui-button-row">
-                    <button type="button" class="mui-btn mui-btn-primary" >扫描</button>
+                    <button type="button" class="mui-btn mui-btn-primary" >查询</button>
                 </div>
 
-                <div class="show-div">
-                    <div class="mui-input-row">
-                        <label>卷号</label>
-                        <p><span>165165</span> <span class="show-span">3</span> </p>
-                    </div>
-                    <div class="mui-input-row">
-                        <label>卷号</label>
-                        <p><span>165168</span> <span class="show-span">16</span> </p>
-                    </div>
-                </div>
+                <table>
+                    <tbody>
+                    <tr align="center">
+                        <th>卷号</th>
+                        <th>长度</th>
+                        <th>宽度</th>
+                        <th>厚度</th>
+                        <th>上架时间</th>
 
-                    <div class="mui-button-row">
-                        <button type="button" class="mui-btn mui-btn-primary" >上架保存</button>
-                    </div>
+                    </tr>
+
+                    <tr align="center">
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>2017-08-16</td>
+
+                    </tr>
+                    </tbody>
+                </table>
 
             </div>
 
@@ -170,44 +122,12 @@
 
     $().ready(function () {
 
-        set();
 
-        function set() {
+        // 设置2个 背景色为空
 
-            var data = {"code":0,"message":[{"AI02FOAMID":"","AI02RACKPOS":1},{"AI02FOAMID":"2","AI02RACKPOS":2},{"AI02FOAMID":"3","AI02RACKPOS":3},{"AI02FOAMID":"4","AI02RACKPOS":4},{"AI02FOAMID":"5","AI02RACKPOS":5},{"AI02FOAMID":"2","AI02RACKPOS":6},{"AI02FOAMID":"7","AI02RACKPOS":7},{"AI02FOAMID":"8","AI02RACKPOS":8},{"AI02FOAMID":"9","AI02RACKPOS":9},{"AI02FOAMID":"2345tt","AI02RACKPOS":10},
-                                            {"AI02FOAMID":"","AI02RACKPOS":11},{"AI02FOAMID":"2","AI02RACKPOS":12},{"AI02FOAMID":"2","AI02RACKPOS":13},{"AI02FOAMID":"2","AI02RACKPOS":14},{"AI02FOAMID":"2","AI02RACKPOS":15},{"AI02FOAMID":"2","AI02RACKPOS":16},{"AI02FOAMID":"17","AI02RACKPOS":17},{"AI02FOAMID":"18","AI02RACKPOS":18},{"AI02FOAMID":"19","AI02RACKPOS":19},{"AI02FOAMID":"2345tt","AI02RACKPOS":20},
-                                            {"AI02FOAMID":"","AI02RACKPOS":21},{"AI02FOAMID":"2","AI02RACKPOS":22},{"AI02FOAMID":"2","AI02RACKPOS":23},{"AI02FOAMID":"2","AI02RACKPOS":24},{"AI02FOAMID":"2","AI02RACKPOS":25},{"AI02FOAMID":"2","AI02RACKPOS":26},{"AI02FOAMID":"27","AI02RACKPOS":27}]};
+        $('.table-tbody > tr:eq(0) >td:eq(2)').css('background','#14c500');
 
-            countNum = 0;
-
-            for (i=0;i<data.message.length;i++){
-
-                list = transform(data.message[i]);
-
-                if ( list[0] == '' ||　list[0] == null || typeof(list[0])=="undefined"){
-
-                    if (i<10){
-                        line = 0;
-                        setNum = i;
-                    }else
-                    if (i<20){
-                        line = 1;
-                        setNum =i-10;
-                    }else{
-                        line = 2;
-                        setNum =i-20;
-                    }
-                    countNum ++;
-
-                    $('.table-tbody > tr:eq('+line+') >td:eq('+setNum+')').css('background','#14c500');
-                }
-
-            }
-
-            // 统计共有多少可上架的数量
-            $('.ul-li-text >span').text(countNum);
-
-        }
+        $('.table-tbody > tr:eq(1) >td:eq(5)').css('background','#14c500');
 
 
         /**

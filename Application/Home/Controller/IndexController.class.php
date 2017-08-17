@@ -100,9 +100,17 @@ class IndexController extends Controller {
      * 泡棉上架
      */
     public function shelves(){
-
         $this->display();
     }
+
+
+    /**
+     * 泡棉详情
+     */
+    public function goods(){
+        $this->display();
+    }
+
 
     /**
      * 调用数据库数据
