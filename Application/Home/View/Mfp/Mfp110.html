@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)http://www.aatmwf.com:3380/BMS/index.php/welcome/ -->
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>Mfp110-流程卡</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=0" />
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/dalian/css/style.css">
+    <link rel="stylesheet" href="__PUBLIC__/dalian/css/main.css" type="text/css">
+    <!-- config中signature由jsticket产生，若jsticket失效，则signature失效，表现为dd.error()返回“权限校验失败”之错误。 -->
+    <!-- 在请求新的jsticket之后，旧的ticket会失效，导致旧ticket产生的signature失效。 -->
+    <script type="text/javascript">var _config = {"url":"http://www.aatmwf.com:3380/BMS/index.php/welcome/","nonceStr":"abcdefg","agentId":"39626573","timeStamp":1503024586,"corpId":"dingbc808e104e6359ee","userid":0,"signature":"74b0f974c3d93f36b1c8e9cc8807c5f69ada9f20"}</script>
+    <script type="text/javascript" src="__PUBLIC__/dalian/js/zepto.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/dalian/js/dingtalk.js"></script>
+
+    <script type="text/javascript" src="__PUBLIC__/dalian/js/jquery-2.1.0.min.js"></script>
+    <!-- 引入fastclick,消除移動端的點擊延遲 非必須 可不用 -->
+    <script type="text/javascript" src="__PUBLIC__/dalian/js/fastclick_enc.min.js"></script>
+
+
+    <script type="text/javascript">
+
+        $(function(){
+            //引入fastclick,消除移動端的點擊延遲 優化體驗 非必須 可不用
+            FastClick.attach(document.body);
+        });
+    </script>
+
+</head>
+<body style="padding-bottom:0px;">
+<div class="mui-content">
+    <div style="padding: 10px 10px;">
+        <div id="segmentedControl" class="mui-segmented-control">
+            <a class="mui-control-item mui-active" href="#item1">
+                流程卡
+            </a>
+            <a class="mui-control-item" href="#item2">
+                PVD信息
+            </a>
+            <a class="mui-control-item" href="#item3">
+                电镀信息
+            </a>
+            <a class="mui-control-item" href="#item4">
+                HT信息
+            </a>
+        </div>
+    </div>
+
+    <div id="item1" class="mui-control-content mui-active">
+        <form class="mui-input-group">
+            <div class="mui-button-row">
+                <button type="button" class="mui-btn mui-btn-primary" onclick="return false;">扫描流程卡</button>
+            </div>
+            <div class="mui-input-row">
+                <label>批号</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>客户</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>面密度</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>孔径</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>长/宽/厚/重</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>当前工段</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+
+            <div class="mui-button-row">
+                <button type="button" class="mui-btn mui-btn-primary" onclick="return false;">确认</button>&nbsp;&nbsp;
+                <button type="button" class="mui-btn mui-btn-danger" onclick="return false;">取消</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="item2" class="mui-control-content">
+        <form class="mui-input-group">
+            <div class="mui-input-row">
+                <label>生产批号</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>泡棉批号</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>投入时间</label>
+                <div id="starttime" style="padding-top:10px; float: left; width: 140px; text-align: left; font-size: 18px; "></div>
+                <button id='showstarttime' data-id="starttime" data-options='{"type":"date"}' class="btn mui-btn mui-btn-primary" style="float:right; width: 85px;">选择日期</button>
+            </div>
+            <div class="mui-input-row">
+                <label>完成时间</label>
+                <div id="endtime" style="padding-top:10px; float: left; width: 140px; text-align: left; font-size: 18px; "></div>
+                <button id='showendtime' data-id="endtime" data-options='{"type":"date"}' class="btn mui-btn mui-btn-primary" style="float:right; width: 85px;">选择日期</button>
+            </div>
+            <div class="mui-input-row">
+                <label>投入长/宽/重</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>产出长/宽/重</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>工段批号</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>泡棉材质</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>电阻</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>当班人</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>客户</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+
+            <div class="mui-button-row">
+                <button type="button" class="mui-btn mui-btn-primary" onclick="return false;">确认</button>&nbsp;&nbsp;
+                <button type="button" class="mui-btn mui-btn-danger" onclick="return false;">取消</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="item3" class="mui-control-content">
+        <form class="mui-input-group">
+            <div class="mui-input-row">
+                <label>生产批号</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>投入时间</label>
+                <div id="starttime2" style="padding-top:10px; float: left; width: 140px; text-align: left; font-size: 18px; "></div>
+                <button id='showstarttime2' data-id="starttime2" data-options='{"type":"date"}' class="btn mui-btn mui-btn-primary" style="float:right; width: 85px;">选择日期</button>
+            </div>
+            <div class="mui-input-row">
+                <label>完成时间</label>
+                <div id="endtime2" style="padding-top:10px; float: left; width: 140px; text-align: left; font-size: 18px; "></div>
+                <button id='showendtime2' data-id="endtime2" data-options='{"type":"date"}' class="btn mui-btn mui-btn-primary" style="float:right; width: 85px;">选择日期</button>
+            </div>
+            <div class="mui-input-row">
+                <label>投入长/宽/重</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>产出长/宽/重</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>工段批号</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>规格</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>表里比</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>可用头/尾</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>废品</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>当班人</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+
+            <div class="mui-button-row">
+                <button type="button" class="mui-btn mui-btn-primary" onclick="return false;">确认</button>&nbsp;&nbsp;
+                <button type="button" class="mui-btn mui-btn-danger" onclick="return false;">取消</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="item4" class="mui-control-content">
+        <form class="mui-input-group">
+            <div class="mui-input-row">
+                <label>生产批号</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>投入时间</label>
+                <div id="starttime3" style="padding-top:10px; float: left; width: 140px; text-align: left; font-size: 18px; "></div>
+                <button id='showstarttime3' data-id="starttime3" data-options='{"type":"date"}' class="btn mui-btn mui-btn-primary" style="float:right; width: 85px;">选择日期</button>
+            </div>
+            <div class="mui-input-row">
+                <label>完成时间</label>
+                <div id="endtime3" style="padding-top:10px; float: left; width: 140px; text-align: left; font-size: 18px; "></div>
+                <button id='showendtime3' data-id="endtime3" data-options='{"type":"date"}' class="btn mui-btn mui-btn-primary" style="float:right; width: 85px;">选择日期</button>
+            </div>
+            <div class="mui-input-row">
+                <label>投入长/宽/重</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>产出长/宽/重</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>工段批号</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>规格</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>热处理层数</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>电阻</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>当班人</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+
+            <div class="mui-button-row">
+                <button type="button" class="mui-btn mui-btn-primary" onclick="return false;">确认</button>&nbsp;&nbsp;
+                <button type="button" class="mui-btn mui-btn-danger" onclick="return false;">取消</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/dalian/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/dalian/js/logger.js"></script>
+<script type="text/javascript" src="__PUBLIC__/dalian/js/dd.js"></script>
+</body>
+</html>

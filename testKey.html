@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta id="viewport" name="viewport"
+          content="width=device-width; initial-scale=1.0; maximum-scale=1; user-scalable=no;">
+
+    <title>Title</title>
+</head>
+<body>
+
+<div class="mui-input-row">
+    <label>测试扫描器</label>
+    <input type="text" class="bigger" placeholder="请输入">
+</div>
+
+<input type="text" onkeypress="myFunction(event)" value="">
+
+<p id="demo"></p>
+<script>
+
+    function myFunction() {
+
+        if (event.keyCode == 13){
+            document.getElementById("demo").innerHTML = "OK";
+        }
+
+    }
+
+
+</script>
+
+</body>
+</html>

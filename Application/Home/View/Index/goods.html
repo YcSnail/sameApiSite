@@ -79,33 +79,42 @@
                         <label>货架</label>
                         <input type="text" class="mui-input-clear" placeholder="输入货架">
                     </div>
+
+                    <div class="mui-button-row">
+                        <button type="button" class="mui-btn mui-btn-primary" >查询</button>
+                    </div>
+
+                    <div class="mui-input-row">
+                        <label>卷号</label>
+                        <input type="text" class="mui-input-clear" readonly="readonly" value="BT45464">
+                    </div>
+
+                    <div class="mui-input-row">
+                        <label>供应商</label>
+                        <input type="text" class="mui-input-clear" readonly="readonly" value="国家高分子">
+                    </div>
+
+                    <div class="mui-input-row">
+                        <label>订单</label>
+                        <input type="text" class="mui-input-clear" readonly="readonly" value="ST4545144">
+                    </div>
+
+                    <div class="mui-input-row">
+                        <label>长/ 宽 / 厚</label>
+                        <input type="text" class="mui-input-clear" readonly="readonly" value="60/465/54">
+                    </div>
+                    <div class="mui-input-row">
+                        <label>规格</label>
+                        <input type="text" class="mui-input-clear" readonly="readonly" value="154*5112">
+                    </div>
+
+                    <div class="mui-input-row">
+                        <label>面积</label>
+                        <input type="text" class="mui-input-clear" readonly="readonly" value="60*165" placeholder="长*宽/10000">
+                    </div>
+
+
                 </form>
-
-                <div class="mui-button-row">
-                    <button type="button" class="mui-btn mui-btn-primary" >查询</button>
-                </div>
-
-                <table>
-                    <tbody>
-                    <tr align="center">
-                        <th>卷号</th>
-                        <th>长度</th>
-                        <th>宽度</th>
-                        <th>厚度</th>
-                        <th>上架时间</th>
-
-                    </tr>
-
-                    <tr align="center">
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>2017-08-16</td>
-
-                    </tr>
-                    </tbody>
-                </table>
 
             </div>
 
@@ -119,232 +128,23 @@
 
 <script>
 
+    $().ready(function (){
 
-    $().ready(function () {
+        // 查询数据
 
-
-        // 设置2个 背景色为空
-
-        $('.table-tbody > tr:eq(0) >td:eq(2)').css('background','#14c500');
-
-        $('.table-tbody > tr:eq(1) >td:eq(5)').css('background','#14c500');
-
-
-        /**
-         * 日期选择
-         */
-        $("#Time").click(function () {
-
-            var dtpicker = new mui.DtPicker({
-                type: "datetime",//设置日历初始视图模式
-                beginDate: new Date(2017, 06, 01),//设置开始日期
-                endDate: new Date(2099, 12, 31),//设置结束日期
-                labels: ['年', '月', '日', '时', '分'],//设置默认标签区域提示语
-            });
-
-            dtpicker.show(function (items) {
-                $("#Time").val(items.value);
-            });
-        });
-
-
-//        getLastNum(); //获取最后一条数据
-
-        function getLastNum() {
-
-            // 获取最近一条记录, 用于存储上次电表数
-            url =  "{:U('Index/ajax')}";
-            h23code = "{$h22code}";
-            mui.post(
-                url,
-                {
-                    "code":"APPHA023_5",
-                    "h23code":h23code
-
-                },function(data){
-
-                    if (data.code == 0){
-
-                        // 设备类型
-                        var type = checkTyepe(data.message[0].H23TYPE);
-                        // 写入 数据
-                        $('.mui-input-group > .mui-input-row:eq(0) > input:eq(0)').val(type);//设备类型
-                        $('.mui-input-group > .mui-input-row:eq(0) > input:eq(1)').val(data.message[0].H23TYPE);//设备类型
-
-                        $('.mui-input-group > .mui-input-row:eq(1) > input').val(data.message[0].H23CODE);//设备编号
-                        $('.mui-input-group > .mui-input-row:eq(2) > input').val(data.message[0].H23DESC);//设备描述
-                        $('.mui-input-group > .mui-input-row:eq(3) > input').val(data.message[0].H23NUMS);//上次读数
-
-                        $('.mui-input-group > .mui-input-row:eq(7) > input').val(data.message[0].H23EMPID);//员工ID
-                        $('.mui-input-group > .mui-input-row:eq(8) > input').val(data.message[0].H23EMPNAME);//员工姓名
-
-                        $('.mui-input-group > .mui-input-row:eq(9) > input').val(data.message[0].ID);//设备ID
-
-
-                    }
-                    else{
-                        mui.alert('获取最近一条记录失败');
-                    }
-                }
-            );
+        function search() {
+            $('.')
 
         }
 
 
-        $('.mui-btn-primary').click(function () {
+        // 设置 长宽厚
 
-            //保存数据
-            saveData();
-        });
-
-        // 保存数据
-        function saveData() {
-
-
-            //循环获取数据
-            dataArr = forData();
-
-            url =  "{:U('Index/ajax')}";
-            mui.post(
-                url,
-                {
-
-                    'code':'APPHA023_1',
-
-                    'h23code':dataArr[1],//设备编号
-                    'h23desc':dataArr[2],//设备描述
-
-                    'h23date':dataArr[4],//本次时间
-                    'h23nums':dataArr[6],//本次读数
-
-                    'h23empid':dataArr[7],//员工ID
-                    'h23empname':dataArr[8],//员工姓名
-                    'k_id':dataArr[9], //设备ID
-                    'h23type':dataArr[11]//设备类型
-
-                },function(data){
-
-                    if (data.code == 0){
-                        mui.alert('保存成功');
-
-                        //获取最近保存的5条记录
-                        getFiveData();
-                        
-                    }else{
-                        mui.alert('保存失败,请重试!');
-                    }
-
-                },'json'
-
-            );
-
-        }
-
-
-        // 获取5条参数
-        function getFiveData() {
-
-            url =  "{:U('Index/ajax')}";
-            h23code = $('.mui-input-group > .mui-input-row:eq(1) > input').val();//设备编号
-
-            mui.post(
-                url,
-                {
-                    'code':'APPHA023_3',
-                    'h23code':h23code
-
-                },function (data) {
-
-                    if (data.code == 0 ){
-
-                        var num = data.message.length;
-                        var message  = data.message;
-
-                        var list ='';
-                        for (i=0;i<num;i++){
-
-                            dd = transform(message[i]);
-                            list +=
-                                '<li class="mui-table-view-cell">'+
-                                '<span>'+ dd[14] + '</span>'+
-                                '<span class="span-text-two">'+dd[12]+'</span>'+
-                                '</li>';
-                        }
-                        $('.mui-table-view').append(list);
-
-                    }else{
-                        mui.alert('获取最近五条记录失败');
-                    }
-                }
-
-            );
-
-        }
-        
-
-        //循环获取数据
-        function forData() {
-
-            var dataArr = Array();
-
-            for (i=0;i<=9;i++){
-
-                dataArr[i] = $('.mui-input-group > .mui-input-row:eq('+i+') > input').val();
-
-                if (dataArr[i] == null || dataArr[i] == '' ){
-                    message = $('.mui-input-group > .mui-input-row:eq('+i+') > label').text();
-                    mui.alert(message+'不能为空');
-                    return;
-                }
-
-            }
-
-            // 获取 设备类型
-            dataArr[11] = $('.mui-input-group > .mui-input-row:eq(0) > input:eq(1)').val();//设备类型
-
-            if (dataArr[11] == null || dataArr[11] == '' ){
-                message = $('.mui-input-group > .mui-input-row:eq(0) > label').text();
-                mui.alert(message+'不能为空,请重新获取');
-                return;
-            }
-
-            return dataArr;
-        }
-
-
-        // 检查设备类型
-        function checkTyepe(type) {
-
-            var typeName ='';
-
-            if (type == 'A'){
-                typeName = '水费';
-            }
-
-            if (type == 'B'){
-                typeName = '电费';
-            }
-
-            if (type == 'C'){
-                typeName = '气费';
-            }
-            return typeName;
-        }
-
-        // 对象转数组
-        function transform(obj){
-            var arr = [];
-            for(var item in obj){
-                arr.push(obj[item]);
-            }
-            return arr;
-        }
 
 
     });
 
-    
-    
+
 </script>
 
 </body>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)http://www.aatmwf.com:3380/BMS/index.php/welcome/ -->
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>Mfp121-添加缺陷</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=0" />
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/dalian/css/style.css">
+    <link rel="stylesheet" href="__PUBLIC__/dalian/css/main.css" type="text/css">
+    <!-- config中signature由jsticket产生，若jsticket失效，则signature失效，表现为dd.error()返回“权限校验失败”之错误。 -->
+    <!-- 在请求新的jsticket之后，旧的ticket会失效，导致旧ticket产生的signature失效。 -->
+    <script type="text/javascript">var _config = {"url":"http://www.aatmwf.com:3380/BMS/index.php/welcome/","nonceStr":"abcdefg","agentId":"39626573","timeStamp":1503024586,"corpId":"dingbc808e104e6359ee","userid":0,"signature":"74b0f974c3d93f36b1c8e9cc8807c5f69ada9f20"}</script>
+    <script type="text/javascript" src="__PUBLIC__/dalian/js/zepto.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/dalian/js/dingtalk.js"></script>
+
+    <script type="text/javascript" src="__PUBLIC__/dalian/js/jquery-2.1.0.min.js"></script>
+    <!-- 引入fastclick,消除移動端的點擊延遲 非必須 可不用 -->
+    <script type="text/javascript" src="__PUBLIC__/dalian/js/fastclick_enc.min.js"></script>
+    <link href="__PUBLIC__/mui/css/mui.min.css" rel="stylesheet">
+    <script src="__PUBLIC__/mui/js/mui.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(function(){
+            //引入fastclick,消除移動端的點擊延遲 優化體驗 非必須 可不用
+            FastClick.attach(document.body);
+        });
+    </script>
+
+    <style>
+        .mui-input-row label {
+            text-align: left;
+        }
+    </style>
+
+</head>
+<body style="padding-bottom:0px;">
+<header class="mui-bar mui-bar-nav">
+    <h1 class="mui-title">MFP121-添加缺陷</h1>
+</header>
+<div class="mui-content">
+
+    <div>
+        <!--<h5 style="padding: 10px 0px; " class="bigger">电子缺陷记录</h5>-->
+        <form class="mui-input-group">
+            <div class="mui-input-row">
+                <label>当前工段</label>
+                <input type="text" class="bigger" placeholder="系统带出">
+            </div>
+            <div class="mui-input-row">
+                <label>长度</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>边距</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>缺陷类型</label>
+                <select>
+                    <option value="">aaa</option>
+                    <option value="">aaa</option>
+                </select>
+            </div>
+            <div class="mui-input-row">
+                <label>其他缺陷</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row">
+                <label>缺陷照片</label>
+                <input type="text" class="bigger" placeholder="请输入">
+            </div>
+            <div class="mui-input-row" style="margin: 10px 5px; height: 80px">
+                <textarea id="textarea" rows="5" class="bigger" placeholder="缺陷描述"></textarea>
+            </div>
+
+            <div class="mui-input-row">
+                <label>记录人</label>
+                <input type="text" class="bigger" placeholder="系统带出">
+            </div>
+
+            <div class="mui-button-row">
+                <button type="button" class="mui-btn mui-btn-primary" onclick="return false;" style="width: 90%;">提交</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/dalian/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/dalian/js/logger.js"></script>
+<script type="text/javascript" src="__PUBLIC__/dalian/js/dd.js"></script>
+</body>
+</html>
