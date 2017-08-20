@@ -4,7 +4,6 @@ use Think\Controller;
 class IndexController extends Controller {
 
     public function index(){
-
         echo 'noting';
         die();
         $this->display();
@@ -41,6 +40,7 @@ class IndexController extends Controller {
 
         $this->display();
     }
+
 
     /**
      * 访客登记
