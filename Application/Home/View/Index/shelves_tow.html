@@ -1,0 +1,485 @@
+<include file="Public/headerM" />
+<link href="__PUBLIC__/mui/css/miu.picker.min.css" rel="stylesheet">
+<script src="__PUBLIC__/mui/js/miu.picker.min.js"></script>
+<title>完成品入库</title>
+
+<style>
+    .mui-btn-primary{
+        width: 50%;
+    }
+    p{
+        line-height: 36px;
+    }
+
+    .div-none{
+        display: none;
+    }
+
+    .span-text-two{
+        margin-left:15%
+    }
+
+    table{
+        margin-top: 14px;
+        width:100%;
+    }
+
+    .table-tbody-tr > td{
+        border: 1px solid;
+        text-align: center;
+        color: #fff;
+    }
+
+    p{
+        color: #000;
+    }
+
+    .ul-li-text{
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .ul-li-text > span{
+        color: #007aff;
+    }
+
+    .show-span{
+        color: #fff;
+        padding: 4px;
+        background: #14c500;
+        margin-left: 6px;
+    }
+
+    .show-div{
+        margin-top: 6px;
+    }
+
+    .mui-badge-danger{
+        background-color: #FF0000;
+    }
+
+    .mui-badge-left {
+        margin-left: 20px;
+    }
+
+    .div-error{
+        background: #f00;
+    }
+
+    .div-success{
+        background: #14c500;
+    }
+
+    .div-selected{
+        background: #007AFF;
+    }
+
+    .div-start{
+        background: #ffa503;
+    }
+
+    .mui-input-row label {
+        width: 40%;
+    }
+
+    .mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea {
+        width: 60%;
+    }
+
+
+
+
+
+
+
+</style>
+
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-pull-left"></a>
+    <h1 class="mui-title">完成品入库</h1>
+</header>
+
+<div class="mui-content">
+
+    <div class="mui-card">
+        <!--页眉，放置标题-->
+        <!--内容区-->
+        <div class="mui-card-content">
+            <div class="mui-card-content-inner">
+                <form class="mui-input-group">
+
+                    <div class="mui-input-row">
+                        <label>货架</label>
+                        <input type="text" class="mui-input-clear" placeholder="输入货架">
+                    </div>
+
+                    <div class="mui-button-row">
+                        <button type="button" class="mui-btn mui-btn-primary btn-search" >查询</button>
+                    </div>
+
+                    <table>
+                        <tbody class="table-tbody">
+                        <tr class="table-tbody-tr" align="center">
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>10</td>
+                        </tr>
+                        <tr class="table-tbody-tr" align="center">
+                            <td>11</td>
+                            <td>12</td>
+                            <td>13</td>
+                            <td>14</td>
+                            <td>15</td>
+                            <td>16</td>
+                            <td>17</td>
+                            <td>18</td>
+                            <td>19</td>
+                            <td>20</td>
+                        </tr>
+
+                        <tr class="table-tbody-tr" align="center">
+                            <td>21</td>
+                            <td>22</td>
+                            <td>23</td>
+                            <td>24</td>
+                            <td>25</td>
+                            <td>26</td>
+                            <td>27</td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+
+                    <ul class="mui-table-view">
+                        <li class="mui-table-view-cell ul-li-text">
+                            可存放数 <span>0</span>
+                        </li>
+                    </ul>
+
+                    <div class="mui-input-row startNum">
+                        <label>起始货架号</label>
+                        <input type="text" class="mui-input-clear" readonly="readonly" placeholder="起始货架号">
+                    </div>
+
+                    <div class="mui-input-row setKey">
+                        <label>托盘号</label>
+                        <input type="text" class="mui-input-clear" placeholder="扫描添加">
+                    </div>
+
+                    <div class="show-div">
+                        <!--<div class="mui-input-row div-none">-->
+                        <!--<label>卷号</label>-->
+                        <!--<p><span>165165</span> <span class="show-span">3</span> </p>-->
+                        <!--</div>-->
+                    </div>
+
+                    <div class="mui-button-row">
+                        <button type="button" class="mui-btn mui-btn-primary btn-submit" >完成品入库</button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+        <!--页脚，放置补充信息或支持的操作-->
+
+    </div>
+
+</div>
+
+
+<script>
+
+    $(function () {
+
+        $('.table-tbody-tr >td').addClass('div-error');
+
+        // 货架点击事件
+        $('.table-tbody > .table-tbody-tr  >td ').click(function () {
+
+            // 判断可存放数 是否为0
+            setCountNum =  $('.ul-li-text >span').text();
+
+            if ( setCountNum <= 0){
+                mui.alert('可存放数为0');
+                return false;
+            }
+
+            if ($(this).is('.div-error')) {
+                return false;
+            }
+
+            if ($('td').is('.div-start') ){
+
+                $('td').removeClass('div-start');
+                $('.startNum > input').val('');
+
+                $(this).addClass('div-start');
+                $('.startNum > input').val($(this).text());
+
+            }else{
+
+                $(this).addClass('div-start');
+                $('.startNum > input').val($(this).text());
+            }
+
+        });
+
+        // JQ 回车触发
+        $('.setKey > input').keypress(function(){
+            if (event.keyCode == 13){
+
+                var saveVal = checkNull(1);
+
+                if (saveVal == false){
+                    return false;
+                }
+
+                addData(saveVal);
+            }
+
+        });
+
+        // 搜索货架
+        $('.btn-search').click(function () {
+
+            // 检查是否为空
+            if (checkNull(0) == false){
+                return false;
+            }
+
+            set();
+
+        });
+
+        // 获取货架中详细信息
+        function set() {
+
+            var data = {"code":0,"message":[{"AI02FOAMID":"","AI02RACKPOS":1},{"AI02FOAMID":"2","AI02RACKPOS":2},{"AI02FOAMID":"3","AI02RACKPOS":3},{"AI02FOAMID":"4","AI02RACKPOS":4},{"AI02FOAMID":"5","AI02RACKPOS":5},{"AI02FOAMID":"2","AI02RACKPOS":6},{"AI02FOAMID":"7","AI02RACKPOS":7},{"AI02FOAMID":"8","AI02RACKPOS":8},{"AI02FOAMID":"9","AI02RACKPOS":9},{"AI02FOAMID":"2345tt","AI02RACKPOS":10},
+                {"AI02FOAMID":"asd","AI02RACKPOS":11},{"AI02FOAMID":"","AI02RACKPOS":12},{"AI02FOAMID":"","AI02RACKPOS":13},{"AI02FOAMID":"2","AI02RACKPOS":14},{"AI02FOAMID":"2","AI02RACKPOS":15},{"AI02FOAMID":"2","AI02RACKPOS":16},{"AI02FOAMID":"17","AI02RACKPOS":17},{"AI02FOAMID":"18","AI02RACKPOS":18},{"AI02FOAMID":"19","AI02RACKPOS":19},{"AI02FOAMID":"2345tt","AI02RACKPOS":20},
+                {"AI02FOAMID":"ss","AI02RACKPOS":21},{"AI02FOAMID":"a","AI02RACKPOS":22},{"AI02FOAMID":"2","AI02RACKPOS":23},{"AI02FOAMID":"2","AI02RACKPOS":24},{"AI02FOAMID":"","AI02RACKPOS":25},{"AI02FOAMID":"2","AI02RACKPOS":26},{"AI02FOAMID":"27","AI02RACKPOS":27}]};
+
+            countNum = 0;
+
+            for (i=0;i<data.message.length;i++){
+
+                list = transform(data.message[i]);
+
+                if ( list[0] == '' ||　list[0] == null || typeof(list[0])=="undefined"){
+
+                    if (i<10){
+                        line = 0;
+                        setNum = i;
+                    }else
+                    if (i<20){
+                        line = 1;
+                        setNum =i-10;
+                    }else{
+                        line = 2;
+                        setNum =i-20;
+                    }
+                    countNum ++;
+
+                    $('.table-tbody > tr:eq('+line+') >td:eq('+setNum+')').addClass("div-success").removeClass('div-error');
+                }
+
+            }
+            // 统计共有多少可上架的数量
+            $('.ul-li-text >span').text(countNum);
+
+            if (countNum == 0){
+                mui.alert('此货架已满');
+                return false;
+            }
+        }
+
+        // 货物存放
+        function addData(setNum) {
+
+            //获取起始位置
+            startNum =  $('.startNum > input').val();
+
+            //获取还可添加的数量
+            var sount = $('.div-success').length;
+
+            if (sount == 0 || sount == null){
+                mui.alert('货架已经放满');
+                return;
+            }
+
+            //添加一条 并修改class 并添加到 列表下
+
+            var selectDiv = $('.div-success:eq(0)');
+            //删除class
+
+            selectDiv.removeClass('div-success');
+            selectDiv.addClass('div-selected');
+            //
+            var setListNum = selectDiv.text();
+
+            // 统计共有多少可上架的数量
+            countNum = countNum-1;
+            $('.ul-li-text >span').text(countNum);
+
+            //要显示的行号
+            setCountNum =  $('.show-div > .mui-input-row').length;
+
+            // 添加数据
+            var setList =
+                '<div class="mui-input-row">'+
+                '<label> <span class="mui-badge mui-badge-danger">'+(setCountNum+1)+'</span><span> 卷号 </span></label>'+
+                '<p>'+
+                '<span>'+setNum+'</span>'+
+                '<span class="mui-badge mui-badge-primary mui-badge-left">'+setListNum+'</span>'+
+                '</p>'+
+                '</div>';
+
+            $('.show-div').append(setList);
+
+            //清空输入框
+            $('.mui-input-row:eq(1) > input').val('');
+        }
+
+
+        $('.btn-submit').click(function () {
+
+            // 检查数据
+
+            // BUG JS 执行顺序问题..
+            if (checkNull(0) == false){
+                return;
+            }
+
+            var checkNum = $('.show-div> .mui-input-row').length;
+            if (checkNum == null || checkNum==''){
+                mui.alert('暂无要保存的数据');
+                return false;
+            }
+
+
+
+            // 获取数据
+            dataArr = forData();
+
+            console.log(dataArr);
+
+        });
+
+        // 保存数据
+        function saveData() {
+
+            //循环获取数据
+            dataArr = forData();
+
+            url =  "{:U('Index/ajax')}";
+            mui.post(
+                url,
+                {
+
+                    'code':'APPHA023_1',
+
+                    'h23code':dataArr[1],//设备编号
+                    'h23desc':dataArr[2],//设备描述
+
+                    'h23date':dataArr[4],//本次时间
+                    'h23nums':dataArr[6],//本次读数
+
+                    'h23empid':dataArr[7],//员工ID
+                    'h23empname':dataArr[8],//员工姓名
+                    'k_id':dataArr[9], //设备ID
+                    'h23type':dataArr[11]//设备类型
+
+                },function(data){
+
+                    if (data.code == 0){
+                        mui.alert('保存成功');
+
+                        //获取最近保存的5条记录
+                        getFiveData();
+
+                    }else{
+                        mui.alert('保存失败,请重试!');
+                    }
+
+                },'json'
+
+            );
+
+        }
+
+        //循环获取数据
+        function forData() {
+
+            mui.alert('cc');
+            return false;
+
+            var dataArr = new Array();
+
+            var countInput =  $('.show-div > .mui-input-row');
+
+            for (i=0;i<countInput.length;i++){
+
+                dataArr[i] = new Array();
+                //编号
+                dataArr[i]['ai02foamid'] = $('.show-div > .mui-input-row:eq('+i+') > p > span:eq(0)').text();
+                //位置
+                dataArr[i]['ai02rackpos'] = $('.show-div > .mui-input-row:eq('+i+') > p > span:eq(1)').text();
+
+                checkEmpty(dataArr[i]['ai02foamid']);
+                checkEmpty(dataArr[i]['ai02rackpos']);
+
+            }
+
+            return dataArr;
+        }
+
+        function checkEmpty(value) {
+            if (value == null || value ==''){
+                mui.alert('不能有空值');
+            }
+        }
+
+        /**
+         * 检测值是否为空
+         * @param num
+         * @returns {*}
+         */
+        function checkNull(num) {
+            var val = $('.mui-input-row:eq('+num+') > input').val();
+            if (val == null || val == '' ){
+                message = $('.mui-input-row:eq('+num+') > label').text();
+                mui.alert(message+'不能为空');
+                return false;
+            }
+            return val;
+        }
+
+        /**
+         * 对象转数组
+         * @param obj
+         * @returns {Array}
+         */
+        function transform(obj){
+            var arr = [];
+            for(var item in obj){
+                arr.push(obj[item]);
+            }
+            return arr;
+        }
+
+
+    });
+
+
+
+</script>
+
+</body>
+</html>

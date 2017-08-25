@@ -3,6 +3,13 @@ namespace Home\Controller;
 use Think\Controller;
 class IndexController extends Controller {
 
+
+//    // 钉钉
+//    public function __construct(){
+//        parent::__construct();
+//
+//    }
+
     public function index(){
         echo 'noting';
         die();
@@ -100,6 +107,14 @@ class IndexController extends Controller {
      * 泡棉上架
      */
     public function shelves(){
+        $this->display();
+    }
+
+
+    /**
+     *
+     */
+    public function shelves_tow(){
         $this->display();
     }
 
