@@ -242,7 +242,7 @@
                     return false;
                 }
 
-                addData(saveVal);
+                addData();
             }
 
         });
@@ -303,7 +303,7 @@
 
 
         // 货物存放
-        function addData(setNum) {
+        function addData() {
 
             //获取还可添加的数量
             sount = $('.div-success').length;
@@ -336,11 +336,11 @@
 
             //要显示的行号
             setCountNum =  $('.show-div > .mui-input-row').length;
-
+            setNum = $('.setKey > input').val();
             // 添加数据
             var setList =
                 '<div class="mui-input-row">'+
-                    '<label> <span class="mui-badge mui-badge-danger">'+(setCountNum+1)+'</span><span> 卷号 </span></label>'+
+                    '<label> <span class="mui-badge mui-badge-danger">'+(setCountNum+1)+'</span><span> 托盘号 </span></label>'+
                     '<p>'+
                         '<span>'+setNum+'</span>'+
                         '<span class="mui-badge mui-badge-primary mui-badge-left">'+setListNum+'</span>'+
