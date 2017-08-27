@@ -163,7 +163,7 @@
                         </li>
                     </ul>
 
-                    <div class="mui-input-row startNum">
+                    <div class="mui-input-row start-num-div">
                         <label>起始货架号</label>
                         <input type="text" class="mui-input-clear" readonly="readonly" placeholder="起始货架号">
                     </div>
@@ -219,15 +219,15 @@
             if ($('td').is('.div-start') ){
 
                 $('td').removeClass('div-start');
-                $('.startNum > input').val('');
+                $('.start-num-div > input').val('');
 
                 $(this).addClass('div-start');
-                $('.startNum > input').val($(this).text());
+                $('.start-num-div > input').val($(this).text());
 
             }else{
 
                 $(this).addClass('div-start');
-                $('.startNum > input').val($(this).text());
+                $('.start-num-div > input').val($(this).text());
             }
 
         });
@@ -300,28 +300,34 @@
             }
         }
 
+
+
         // 货物存放
         function addData(setNum) {
 
-            //获取起始位置
-            startNum =  $('.startNum > input').val();
-
             //获取还可添加的数量
-            var sount = $('.div-success').length;
+            sount = $('.div-success').length;
 
             if (sount == 0 || sount == null){
                 mui.alert('货架已经放满');
                 return;
             }
+            setI = 'null';
+
+            checkSetOne();
+
+            if ( setI == 'null' ){
+                mui.alert('无可存放的货架');
+                return false;
+            }
 
             //添加一条 并修改class 并添加到 列表下
 
-            var selectDiv = $('.div-success:eq(0)');
+            selectDiv = $('.div-success:eq('+setI+')');
             //删除class
 
-            selectDiv.removeClass('div-success');
-            selectDiv.addClass('div-selected');
-            //
+            selectDiv.removeClass('div-success').addClass('div-selected');
+
             var setListNum = selectDiv.text();
 
             // 统计共有多少可上架的数量
@@ -334,17 +340,17 @@
             // 添加数据
             var setList =
                 '<div class="mui-input-row">'+
-                '<label> <span class="mui-badge mui-badge-danger">'+(setCountNum+1)+'</span><span> 卷号 </span></label>'+
-                '<p>'+
-                '<span>'+setNum+'</span>'+
-                '<span class="mui-badge mui-badge-primary mui-badge-left">'+setListNum+'</span>'+
-                '</p>'+
+                    '<label> <span class="mui-badge mui-badge-danger">'+(setCountNum+1)+'</span><span> 卷号 </span></label>'+
+                    '<p>'+
+                        '<span>'+setNum+'</span>'+
+                        '<span class="mui-badge mui-badge-primary mui-badge-left">'+setListNum+'</span>'+
+                    '</p>'+
                 '</div>';
 
             $('.show-div').append(setList);
 
             //清空输入框
-            $('.mui-input-row:eq(1) > input').val('');
+            $('.setKey > input').val('');
         }
 
 
@@ -364,13 +370,39 @@
             }
 
 
-
             // 获取数据
             dataArr = forData();
 
             console.log(dataArr);
 
         });
+
+        /**
+         * 判断 不在其位置或其后的 货架 是否存在
+         */
+        function checkSetOne() {
+            //获取起始位置
+            startNum =  $('.start-num-div > input').val();
+
+            countSetNum = 0;
+            countSetArr = new Array();
+
+            // 获取其实位置后可添加的数量
+            for ( i=0;i<sount; i++ ){
+
+                selectDiv = $('.div-success:eq('+i+') ').text();
+
+                // 判断过滤掉 不在其位置或其后的 货架
+                if ( selectDiv >= startNum ){
+                    setI = i;
+                    countSetNum = countSetNum+1;
+                    return true;
+                }
+
+            }
+
+        }
+
 
         // 保存数据
         function saveData() {
