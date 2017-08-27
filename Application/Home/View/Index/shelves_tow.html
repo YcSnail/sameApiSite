@@ -86,6 +86,13 @@
         width: 60%;
     }
 
+    .icon-size{
+        font-size: 20px;
+        color: #909090;
+        float: right;
+        margin-right: 10px;
+        margin-top: 8px;
+    }
 
 
 
@@ -164,8 +171,8 @@
                     </ul>
 
                     <div class="mui-input-row start-num-div">
-                        <label>起始货架号</label>
-                        <input type="text" class="mui-input-clear" readonly="readonly" placeholder="起始货架号">
+                        <label>当前货架号</label>
+                        <input type="text" class="mui-input-clear" readonly="readonly" placeholder="当前货架号">
                     </div>
 
                     <div class="mui-input-row setKey">
@@ -197,7 +204,17 @@
 
 <script>
 
+
+
+
+
     $(function () {
+
+        $('.show-div > .mui-input-row > p > .icon-size').click(function () {
+
+            alert('aa');
+
+        });
 
         $('.table-tbody-tr >td').addClass('div-error');
 
@@ -315,7 +332,6 @@
             setI = 'null';
 
             checkSetOne();
-
             if ( setI == 'null' ){
                 mui.alert('无可存放的货架');
                 return false;
@@ -323,7 +339,8 @@
 
             //添加一条 并修改class 并添加到 列表下
 
-            selectDiv = $('.div-success:eq('+setI+')');
+            selectDiv = $('.div-success:eq('+countSetArr[0]+')');
+            nextSelectDiv = $('.div-success:eq('+countSetArr[1]+')').text();
             //删除class
 
             selectDiv.removeClass('div-success').addClass('div-selected');
@@ -337,6 +354,13 @@
             //要显示的行号
             setCountNum =  $('.show-div > .mui-input-row').length;
             setNum = $('.setKey > input').val();
+
+            if (nextSelectDiv ==''){
+                nextSelectDiv = '无';
+            }
+
+            $('.start-num-div > input').val(nextSelectDiv);
+
             // 添加数据
             var setList =
                 '<div class="mui-input-row">'+
@@ -344,6 +368,7 @@
                     '<p>'+
                         '<span>'+setNum+'</span>'+
                         '<span class="mui-badge mui-badge-primary mui-badge-left">'+setListNum+'</span>'+
+                        '<i class="mui-icon mui-icon-clear icon-size" onclick="delectDiv(setCountNum)"></i>'+
                     '</p>'+
                 '</div>';
 
@@ -373,8 +398,6 @@
             // 获取数据
             dataArr = forData();
 
-            console.log(dataArr);
-
         });
 
         /**
@@ -382,7 +405,7 @@
          */
         function checkSetOne() {
             //获取起始位置
-            startNum =  $('.start-num-div > input').val();
+            startNum =  $('.div-start').text();
 
             countSetNum = 0;
             countSetArr = new Array();
@@ -396,7 +419,7 @@
                 if ( selectDiv >= startNum ){
                     setI = i;
                     countSetNum = countSetNum+1;
-                    return true;
+                    countSetArr.push(i);
                 }
 
             }
@@ -449,7 +472,7 @@
         //循环获取数据
         function forData() {
 
-            mui.alert('cc');
+            mui.alert('保存成功');
             return false;
 
             var dataArr = new Array();
@@ -508,6 +531,34 @@
 
 
     });
+
+
+    /**
+     * 删除添加的 托盘
+     */
+    function delectDiv(delectNum) {
+
+        $('.show-div > .mui-input-row:eq('+ delectNum+')').remove();
+
+        //恢复 修改
+        // 获取要恢复的数据
+        recoverNum = $('.show-div > .mui-input-row:eq('+delectNum+') > p > .mui-badge-left ').text();
+
+        // 获取第几行
+        recoverLine = parseInt(recoverNum/10);
+
+        // 获取 第几个
+        setRecoverNum = recoverNum - (recoverLine*10);
+
+        // 把class 从 div-selected 恢复到 div-success
+        $('.table-tbody > .table-tbody-tr:eq('+recoverLine+') > td:eq('+setRecoverNum+')').removeClass('div-selected').addClass('div-success');
+
+        // 可 存放数 +1
+        setCountNum = parseInt($('.ul-li-text > span').text());
+        setCountNum = setCountNum + 1;
+        $('.ul-li-text > span').text(setCountNum);
+
+    }
 
 
 
