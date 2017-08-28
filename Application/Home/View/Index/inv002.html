@@ -1,0 +1,700 @@
+<include file="Public/headerM" />
+<link href="__PUBLIC__/mui/css/miu.picker.min.css" rel="stylesheet">
+<script src="__PUBLIC__/mui/js/miu.picker.min.js"></script>
+<title>完成品入库</title>
+
+<style>
+    .mui-btn-primary{
+        width: 50%;
+    }
+
+    p{
+        line-height: 36px;
+    }
+
+    .div-none{
+        display: none;
+    }
+
+    .span-text-two{
+        margin-left:15%
+    }
+
+    table{
+        margin-top: 14px;
+        width:100%;
+    }
+
+    .table-tbody-tr > td{
+        border: 1px solid;
+        text-align: center;
+        color: #fff;
+        width: 50px;
+        height: 50px;
+    }
+
+    p{
+        color: #000;
+    }
+
+    .ul-li-text{
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .ul-li-text > span{
+        color: #007aff;
+    }
+
+    .show-span{
+        color: #fff;
+        padding: 4px;
+        background: #14c500;
+        margin-left: 6px;
+    }
+
+    .show-div{
+        margin-top: 6px;
+    }
+
+    .mui-badge-danger{
+        background-color: #FF0000;
+    }
+
+    .mui-badge-left {
+        margin-left: 20px;
+    }
+
+    .div-error{
+        background: #f00;
+    }
+
+    .div-success{
+        background: #14c500;
+    }
+
+    .div-selected{
+        background: #007AFF;
+    }
+
+    .div-start{
+        background: #ffa503;
+    }
+
+    .mui-input-row label {
+        width: 40%;
+    }
+
+    .mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea {
+        width: 60%;
+    }
+
+    .icon-size{
+        font-size: 20px;
+        color: #909090;
+        float: right;
+        margin-right: 10px;
+        margin-top: 8px;
+    }
+
+</style>
+
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-pull-left"></a>
+    <h1 class="mui-title">完成品入库</h1>
+</header>
+
+<div class="mui-content">
+
+    <div class="mui-card">
+        <!--页眉，放置标题-->
+        <!--内容区-->
+        <div class="mui-card-content">
+            <div class="mui-card-content-inner">
+                <form class="mui-input-group">
+
+                    <div class="mui-input-row">
+                        <label>货架</label>
+                        <input type="text" class="mui-input-clear" placeholder="输入货架">
+                    </div>
+
+                    <div class="mui-button-row">
+                        <button type="button" class="mui-btn mui-btn-primary btn-search" >查询</button>
+                    </div>
+
+                    <div class="show-content">
+
+                        <div class="mui-segmented-control">
+                            <a class="mui-control-item mui-active" href="#item1">第一层</a>
+                            <a class="mui-control-item" href="#item2">第二层</a>
+                            <a class="mui-control-item" href="#item3">第三层</a>
+                        </div>
+                        <div class="mui-clearfix">
+
+                            <div id="item1" class="mui-control-content mui-active">
+
+                                <table>
+                                    <tbody class="table-tbody">
+                                    <tr class="table-tbody-tr" align="center">
+                                        <td>1</td>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>5</td>
+                                        <td>6</td>
+                                    </tr>
+                                    <tr class="table-tbody-tr" align="center">
+                                        <td>7</td>
+                                        <td>8</td>
+                                        <td>9</td>
+                                        <td>10</td>
+                                        <td>11</td>
+                                        <td>12</td>
+                                    </tr>
+                                    <tr class="table-tbody-tr" align="center">
+                                        <td>13</td>
+                                        <td>14</td>
+                                        <td>15</td>
+                                        <td>16</td>
+                                        <td>17</td>
+                                        <td>18</td>
+                                    </tr>
+
+                                    </tbody>
+
+                                </table>
+                                <ul class="mui-table-view">
+                                    <li class="mui-table-view-cell ul-li-text">
+                                        可存放数 <span>1</span>
+                                    </li>
+                                </ul>
+                                <div class="mui-input-row start-num-div">
+                                    <label>当前货架号</label>
+                                    <input type="text" class="mui-input-clear" readonly="readonly" placeholder="当前货架号">
+                                </div>
+                                <div class="mui-input-row setKey">
+                                    <label>托盘号</label>
+                                    <input type="text" class="mui-input-clear" placeholder="扫描添加">
+                                </div>
+                                <div class="show-div">
+                                    <!--<div class="mui-input-row div-none">-->
+                                    <!--<label>卷号</label>-->
+                                    <!--<p><span>165165</span> <span class="show-span">3</span> </p>-->
+                                    <!--</div>-->
+                                </div>
+                                <div class="mui-button-row">
+                                    <button type="button" class="mui-btn mui-btn-primary btn-submit" >完成品入库</button>
+                                </div>
+                                <div class="mui-button-row">
+                                    <button type="button" class="mui-btn mui-btn-primary btn-reset" >重置</button>
+                                </div>
+
+                            </div>
+
+                            <div id="item2" class="mui-control-content">
+
+                                <table>
+                                    <tbody class="table-tbody">
+                                    <tr class="table-tbody-tr" align="center">
+                                        <td>1</td>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>5</td>
+                                        <td>6</td>
+                                    </tr>
+                                    <tr class="table-tbody-tr" align="center">
+                                        <td>7</td>
+                                        <td>8</td>
+                                        <td>9</td>
+                                        <td>10</td>
+                                        <td>11</td>
+                                        <td>12</td>
+                                    </tr>
+                                    <tr class="table-tbody-tr" align="center">
+                                        <td>13</td>
+                                        <td>14</td>
+                                        <td>15</td>
+                                        <td>16</td>
+                                        <td>17</td>
+                                        <td>18</td>
+                                    </tr>
+
+                                    </tbody>
+
+                                </table>
+                                <ul class="mui-table-view">
+                                    <li class="mui-table-view-cell ul-li-text">
+                                        可存放数 <span>2</span>
+                                    </li>
+                                </ul>
+                                <div class="mui-input-row start-num-div">
+                                    <label>当前货架号</label>
+                                    <input type="text" class="mui-input-clear" readonly="readonly" placeholder="当前货架号">
+                                </div>
+                                <div class="mui-input-row setKey">
+                                    <label>托盘号</label>
+                                    <input type="text" class="mui-input-clear" placeholder="扫描添加">
+                                </div>
+                                <div class="show-div">
+                                    <!--<div class="mui-input-row div-none">-->
+                                    <!--<label>卷号</label>-->
+                                    <!--<p><span>165165</span> <span class="show-span">3</span> </p>-->
+                                    <!--</div>-->
+                                </div>
+                                <div class="mui-button-row">
+                                    <button type="button" class="mui-btn mui-btn-primary btn-submit" >完成品入库</button>
+                                </div>
+                                <div class="mui-button-row">
+                                    <button type="button" class="mui-btn mui-btn-primary btn-reset" >重置</button>
+                                </div>
+                            </div>
+
+                            <div id="item3" class="mui-control-content">
+                                <table>
+                                    <tbody class="table-tbody">
+                                    <tr class="table-tbody-tr" align="center">
+                                        <td>1</td>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>5</td>
+                                        <td>6</td>
+                                    </tr>
+                                    <tr class="table-tbody-tr" align="center">
+                                        <td>7</td>
+                                        <td>8</td>
+                                        <td>9</td>
+                                        <td>10</td>
+                                        <td>11</td>
+                                        <td>12</td>
+                                    </tr>
+                                    <tr class="table-tbody-tr" align="center">
+                                        <td>13</td>
+                                        <td>14</td>
+                                        <td>15</td>
+                                        <td>16</td>
+                                        <td>17</td>
+                                        <td>18</td>
+                                    </tr>
+
+                                    </tbody>
+
+                                </table>
+                                <ul class="mui-table-view">
+                                    <li class="mui-table-view-cell ul-li-text">
+                                        可存放数 <span>3</span>
+                                    </li>
+                                </ul>
+                                <div class="mui-input-row start-num-div">
+                                    <label>当前货架号</label>
+                                    <input type="text" class="mui-input-clear" readonly="readonly" placeholder="当前货架号">
+                                </div>
+                                <div class="mui-input-row setKey">
+                                    <label>托盘号</label>
+                                    <input type="text" class="mui-input-clear" placeholder="扫描添加">
+                                </div>
+                                <div class="show-div">
+                                    <!--<div class="mui-input-row div-none">-->
+                                    <!--<label>卷号</label>-->
+                                    <!--<p><span>165165</span> <span class="show-span">3</span> </p>-->
+                                    <!--</div>-->
+                                </div>
+                                <div class="mui-button-row">
+                                    <button type="button" class="mui-btn mui-btn-primary btn-submit" >完成品入库</button>
+                                </div>
+                                <div class="mui-button-row">
+                                    <button type="button" class="mui-btn mui-btn-primary btn-reset" >重置</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </form>
+            </div>
+
+        </div>
+        <!--页脚，放置补充信息或支持的操作-->
+
+    </div>
+
+</div>
+
+
+<script>
+
+    $(function () {
+
+
+        // 重置输入结果
+        // 重新搜索 并且删除 已经输入的 信息
+        $('.btn-reset').click(function () {
+
+            $('.show-div').empty();
+            $('td').removeClass('div-start').removeClass('div-selected');
+            $('.btn-search').trigger("click");
+            $('.start-num-div')
+
+        });
+
+
+        $('.table-tbody-tr >td').addClass('div-error');
+
+        // 货架点击事件
+        $('.table-tbody > .table-tbody-tr  >td ').click(function () {
+
+            // 判断可存放数 是否为0
+            setCountNum =  $('.ul-li-text >span').text();
+
+            if ( setCountNum <= 0){
+                mui.alert('可存放数为0');
+                return false;
+            }
+
+            if ($(this).is('.div-error')) {
+                return false;
+            }
+
+            if ($('td').is('.div-start') ){
+
+                $('td').removeClass('div-start');
+                $('.start-num-div > input').val('');
+
+                $(this).addClass('div-start');
+                $('.start-num-div > input').val($(this).text());
+
+            }else{
+
+                $(this).addClass('div-start');
+                $('.start-num-div > input').val($(this).text());
+            }
+
+            $('.setKey > input').focus()
+
+        });
+
+        // JQ 回车触发
+        $('.setKey > input').keypress(function(){
+            if (event.keyCode == 13){
+
+                var saveVal = checkNull(1);
+
+                if (saveVal == false){
+                    return false;
+                }
+
+                addData();
+            }
+
+        });
+
+        // 搜索货架
+        $('.btn-search').click(function () {
+
+            // 检查是否为空
+            if (checkNull(0) == false){
+                return false;
+            }
+
+            set();
+
+        });
+
+        // 获取货架中详细信息
+        function set() {
+
+            var data = {"code":0,"message":[
+                    {"AI02RACK":"F2B011","AI02ROW":1,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+                    {"AI02RACK":"F2B021","AI02ROW":2,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+                    {"AI02RACK":"F2B031","AI02ROW":3,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+                    {"AI02RACK":"F2B041","AI02ROW":4,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+                    {"AI02RACK":"F2B051","AI02ROW":5,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+                    {"AI02RACK":"F2B061","AI02ROW":6,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+                    {"AI02RACK":"F2B071","AI02ROW":7,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+
+                    {"AI02RACK":"F2B012","AI02ROW":1,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+                    {"AI02RACK":"F2B022","AI02ROW":2,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+                    {"AI02RACK":"F2B032","AI02ROW":3,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+                    {"AI02RACK":"F2B042","AI02ROW":4,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+                    {"AI02RACK":"F2B052","AI02ROW":5,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+                    {"AI02RACK":"F2B062","AI02ROW":6,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+                    {"AI02RACK":"F2B072","AI02ROW":7,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+
+                    {"AI02RACK":"F2B013","AI02ROW":1,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+                    {"AI02RACK":"F2B023","AI02ROW":2,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+                    {"AI02RACK":"F2B033","AI02ROW":3,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+                    {"AI02RACK":"F2B043","AI02ROW":4,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+                    {"AI02RACK":"F2B053","AI02ROW":5,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+                    {"AI02RACK":"F2B063","AI02ROW":6,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+                    {"AI02RACK":"F2B073","AI02ROW":7,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
+                ]};
+
+            countNum = 0;
+            list = data.message;
+
+            lastLine = 0;
+            count = 0;
+
+            for (i=0;i<list.length;i++){
+
+                //判断属于 第几个
+                setLine =  parseInt(list[i]['AI02LAYER']);
+
+                // 是同一层
+                if ( setLine == lastLine ){
+
+                    setDiv = '';
+
+                }
+
+                setTr = '<tr class="table-tbody-tr" align="center">';
+
+                    setTd = '<td class="div-error">1</td>';
+
+                setTr = '</tr>';
+
+
+                setDiv = setTr + setTd + setTr;
+
+                $('#item'+ setLine+'> table>tbody' );
+
+                console.log(list[i]['AI02LAYER']);
+                return;
+
+
+
+                $('.table-tbody > tr:eq('+line+') >td:eq('+setNum+')').addClass("div-success").removeClass('div-error');
+            }
+            // 统计共有多少可上架的数量
+            $('.ul-li-text >span').text(countNum);
+
+            if (countNum == 0){
+                mui.alert('此货架已满');
+                return false;
+            }
+        }
+
+
+
+        // 货物存放
+        function addData() {
+
+            //获取还可添加的数量
+            sount = $('.div-success').length;
+
+            if (sount == 0 || sount == null){
+                mui.alert('货架已经放满');
+                return;
+            }
+
+            setI = 'null';
+
+            checkSetOne();
+            if ( setI == 'null' ){
+                mui.alert('无可存放的货架');
+                return false;
+            }
+
+            //添加一条 并修改class 并添加到 列表下
+
+            selectDiv = $('.div-success:eq('+countSetArr[0]+')');
+            nextSelectDiv = $('.div-success:eq('+countSetArr[1]+')').text();
+            //删除class
+
+            selectDiv.removeClass('div-success').addClass('div-selected');
+
+            var setListNum = selectDiv.text();
+
+            countNum = $('.ul-li-text >span').text();
+            // 统计共有多少可上架的数量
+            countNum = countNum-1;
+            $('.ul-li-text >span').text(countNum);
+
+            //要显示的行号
+            setCountNum =  $('.show-div > .mui-input-row').length;
+            setNum = $('.setKey > input').val();
+
+            if (nextSelectDiv ==''){
+                nextSelectDiv = '无';
+            }
+
+            $('.start-num-div > input').val(nextSelectDiv);
+
+            // 添加数据
+            var setList =
+                '<div class="mui-input-row">'+
+                    '<label> <span class="mui-badge mui-badge-danger">'+(setCountNum+1)+'</span><span> 托盘号 </span></label>'+
+                    '<p>'+
+                        '<span>'+setNum+'</span>'+
+                        '<span class="mui-badge mui-badge-primary mui-badge-left">'+setListNum+'</span>'+
+                    '</p>'+
+                '</div>';
+
+            $('.show-div').append(setList);
+
+            //清空输入框
+            $('.setKey > input').val('');
+        }
+
+
+        $('.btn-submit').click(function () {
+
+            // 检查数据
+
+            // BUG JS 执行顺序问题..
+            if (checkNull(0) == false){
+                return;
+            }
+
+            var checkNum = $('.show-div> .mui-input-row').length;
+            if (checkNum == null || checkNum==''){
+                mui.alert('暂无要保存的数据');
+                return false;
+            }
+
+
+            // 获取数据
+            dataArr = forData();
+
+        });
+
+        /**
+         * 判断 不在其位置或其后的 货架 是否存在
+         */
+        function checkSetOne() {
+            //获取起始位置
+            startNum =  $('.div-start').text();
+
+            countSetNum = 0;
+            countSetArr = new Array();
+
+            // 获取其实位置后可添加的数量
+            for ( i=0;i<sount; i++ ){
+
+                selectDiv = $('.div-success:eq('+i+') ').text();
+
+                // 判断过滤掉 不在其位置或其后的 货架
+                if ( selectDiv >= startNum ){
+                    setI = i;
+                    countSetNum = countSetNum+1;
+                    countSetArr.push(i);
+                }
+
+            }
+
+        }
+
+
+        // 保存数据
+        function saveData() {
+
+            //循环获取数据
+            dataArr = forData();
+
+            url =  "{:U('Index/ajax')}";
+            mui.post(
+                url,
+                {
+
+                    'code':'APPHA023_1',
+
+                    'h23code':dataArr[1],//设备编号
+                    'h23desc':dataArr[2],//设备描述
+
+                    'h23date':dataArr[4],//本次时间
+                    'h23nums':dataArr[6],//本次读数
+
+                    'h23empid':dataArr[7],//员工ID
+                    'h23empname':dataArr[8],//员工姓名
+                    'k_id':dataArr[9], //设备ID
+                    'h23type':dataArr[11]//设备类型
+
+                },function(data){
+
+                    if (data.code == 0){
+                        mui.alert('保存成功');
+
+                        //获取最近保存的5条记录
+                        getFiveData();
+
+                    }else{
+                        mui.alert('保存失败,请重试!');
+                    }
+
+                },'json'
+
+            );
+
+        }
+
+        //循环获取数据
+        function forData() {
+
+            mui.alert('保存成功');
+            return false;
+
+            var dataArr = new Array();
+
+            var countInput =  $('.show-div > .mui-input-row');
+
+            for (i=0;i<countInput.length;i++){
+
+                dataArr[i] = new Array();
+                //编号
+                dataArr[i]['ai02foamid'] = $('.show-div > .mui-input-row:eq('+i+') > p > span:eq(0)').text();
+                //位置
+                dataArr[i]['ai02rackpos'] = $('.show-div > .mui-input-row:eq('+i+') > p > span:eq(1)').text();
+
+                checkEmpty(dataArr[i]['ai02foamid']);
+                checkEmpty(dataArr[i]['ai02rackpos']);
+
+            }
+
+            return dataArr;
+        }
+
+        function checkEmpty(value) {
+            if (value == null || value ==''){
+                mui.alert('不能有空值');
+            }
+        }
+
+        /**
+         * 检测值是否为空
+         * @param num
+         * @returns {*}
+         */
+        function checkNull(num) {
+            var val = $('.mui-input-row:eq('+num+') > input').val();
+            if (val == null || val == '' ){
+                message = $('.mui-input-row:eq('+num+') > label').text();
+                mui.alert(message+'不能为空');
+                return false;
+            }
+            return val;
+        }
+
+        /**
+         * 对象转数组
+         * @param obj
+         * @returns {Array}
+         */
+        function transform(obj){
+            var arr = [];
+            for(var item in obj){
+                arr.push(obj[item]);
+            }
+            return arr;
+        }
+
+
+    });
+
+
+</script>
+
+</body>
+</html>

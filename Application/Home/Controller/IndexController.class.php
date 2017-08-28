@@ -112,9 +112,16 @@ class IndexController extends Controller {
 
 
     /**
-     *
+     * 完成品入库
      */
     public function shelves_tow(){
+        $this->display();
+    }
+
+    /**
+     * 完成品入库
+     */
+    public function inv002(){
         $this->display();
     }
 

@@ -1,7 +1,7 @@
 <include file="Public/headerM" />
 <link href="__PUBLIC__/mui/css/miu.picker.min.css" rel="stylesheet">
 <script src="__PUBLIC__/mui/js/miu.picker.min.js"></script>
-<title>完成品入库</title>
+<title>泡棉入库</title>
 
 <style>
     .mui-btn-primary{
@@ -103,7 +103,7 @@
 
 <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-pull-left"></a>
-    <h1 class="mui-title">完成品入库</h1>
+    <h1 class="mui-title">泡棉入库</h1>
 </header>
 
 <div class="mui-content">
@@ -176,7 +176,7 @@
                     </div>
 
                     <div class="mui-input-row setKey">
-                        <label>托盘号</label>
+                        <label>泡棉条码</label>
                         <input type="text" class="mui-input-clear" placeholder="扫描添加">
                     </div>
 
@@ -188,7 +188,10 @@
                     </div>
 
                     <div class="mui-button-row">
-                        <button type="button" class="mui-btn mui-btn-primary btn-submit" >完成品入库</button>
+                        <button type="button" class="mui-btn mui-btn-primary btn-submit" >泡棉入库</button>
+                    </div>
+                    <div class="mui-button-row">
+                        <button type="button" class="mui-btn mui-btn-primary btn-reset" >重置</button>
                     </div>
 
                 </form>
@@ -204,17 +207,19 @@
 
 <script>
 
-
-
-
-
     $(function () {
 
-        $('.show-div > .mui-input-row > p > .icon-size').click(function () {
 
-            alert('aa');
+        // 重置输入结果
+        // 重新搜索 并且删除 已经输入的 信息
+        $('.btn-reset').click(function () {
+            $('.show-div').empty();
+            $('td').removeClass('div-start').removeClass('div-selected');
+            $('.btn-search').trigger("click");
+            $('.start-num-div')
 
         });
+
 
         $('.table-tbody-tr >td').addClass('div-error');
 
@@ -246,6 +251,8 @@
                 $(this).addClass('div-start');
                 $('.start-num-div > input').val($(this).text());
             }
+
+            $('.setKey > input').focus()
 
         });
 
@@ -329,6 +336,7 @@
                 mui.alert('货架已经放满');
                 return;
             }
+
             setI = 'null';
 
             checkSetOne();
@@ -347,6 +355,7 @@
 
             var setListNum = selectDiv.text();
 
+            countNum = $('.ul-li-text >span').text();
             // 统计共有多少可上架的数量
             countNum = countNum-1;
             $('.ul-li-text >span').text(countNum);
@@ -368,7 +377,6 @@
                     '<p>'+
                         '<span>'+setNum+'</span>'+
                         '<span class="mui-badge mui-badge-primary mui-badge-left">'+setListNum+'</span>'+
-                        '<i class="mui-icon mui-icon-clear icon-size" onclick="delectDiv(setCountNum)"></i>'+
                     '</p>'+
                 '</div>';
 
@@ -531,35 +539,6 @@
 
 
     });
-
-
-    /**
-     * 删除添加的 托盘
-     */
-    function delectDiv(delectNum) {
-
-        $('.show-div > .mui-input-row:eq('+ delectNum+')').remove();
-
-        //恢复 修改
-        // 获取要恢复的数据
-        recoverNum = $('.show-div > .mui-input-row:eq('+delectNum+') > p > .mui-badge-left ').text();
-
-        // 获取第几行
-        recoverLine = parseInt(recoverNum/10);
-
-        // 获取 第几个
-        setRecoverNum = recoverNum - (recoverLine*10);
-
-        // 把class 从 div-selected 恢复到 div-success
-        $('.table-tbody > .table-tbody-tr:eq('+recoverLine+') > td:eq('+setRecoverNum+')').removeClass('div-selected').addClass('div-success');
-
-        // 可 存放数 +1
-        setCountNum = parseInt($('.ul-li-text > span').text());
-        setCountNum = setCountNum + 1;
-        $('.ul-li-text > span').text(setCountNum);
-
-    }
-
 
 
 </script>
