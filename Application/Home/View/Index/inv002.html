@@ -62,7 +62,8 @@
     }
 
     .mui-badge-left {
-        margin-left: 20px;
+        float: right;
+        margin-top: 8px;
     }
 
     .div-error{
@@ -79,6 +80,10 @@
 
     .div-start{
         background: #ffa503;
+    }
+
+    .div-unable{
+        background: #cecece;
     }
 
     .mui-input-row label {
@@ -141,7 +146,7 @@
                                 </table>
                                 <ul class="mui-table-view">
                                     <li class="mui-table-view-cell ul-li-text">
-                                        可存放数 <span>1</span>
+                                        可存放数 <span>0</span>
                                     </li>
                                 </ul>
                                 <div class="mui-input-row start-num-div">
@@ -177,7 +182,7 @@
                                 </table>
                                 <ul class="mui-table-view">
                                     <li class="mui-table-view-cell ul-li-text">
-                                        可存放数 <span>2</span>
+                                        可存放数 <span>0</span>
                                     </li>
                                 </ul>
                                 <div class="mui-input-row start-num-div">
@@ -211,7 +216,7 @@
                                 </table>
                                 <ul class="mui-table-view">
                                     <li class="mui-table-view-cell ul-li-text">
-                                        可存放数 <span>3</span>
+                                        可存放数 <span>0</span>
                                     </li>
                                 </ul>
                                 <div class="mui-input-row start-num-div">
@@ -267,11 +272,12 @@
             count = 0;
             trLine = 0;
             setClass = '';
+            setNum = 0;
 
             for (i=0;i<list.length;i++){
 
                 //判断属于 第几个
-                setLine =  parseInt(list[i]['AI02LAYER'])
+                setLine =  parseInt(list[i]['AI02LAYER']);
 
                 // 如果不等于 本层，则重新计数
                 if (setLine != lastLine){
@@ -281,19 +287,33 @@
                     trLine = 0;
                     setClass = '';
                     lastLine = setLine;
+                    setNum = 0;
 
                 }
 
+                // 切割字符串aa
                 setValue = list[i]['AI02RACK'];
 
                 setValue = setValue.substr(3);
+                typeClass ='';
 
                 // 判断状态
-                if ('a'== 'a'){
+                if ( list[i]['STATUS'] == 'A' ){
 
+                    // 无值 为可用  有值为不可用
+                    if (list[i]['AI02PALLET'] == ''){
+                        typeClass  = 'div-success';
+                        setNum  = setNum+1;
+
+                    }else{
+                        typeClass  = 'div-error';
+                    }
+
+                }else{
+                    typeClass  = 'div-unable';
                 }
 
-                setDiv = '<td>'+setValue+'</td>';
+                setDiv = '<td class='+typeClass+'>'+setValue+'</td>';
 
                 if ( count == 0 ){
 
@@ -316,18 +336,12 @@
                 }
 
                 $('#item'+ setLine+' > table>tbody'+setClass ).append(setDiv);
-
-                console.log(('#item'+ setLine+'> table>tbody'+setClass ));
-                console.log(setDiv);
+                // 统计可存放数
+                $('#item'+ setLine+' > ul>li> span' ).text(setNum);
 
             }
 
         }
-
-        $('.table-tbody-tr >td').addClass('div-error');
-        return;
-
-
 
         // 重置输入结果
         // 重新搜索 并且删除 已经输入的 信息
@@ -341,13 +355,16 @@
         });
 
 
-        $('.table-tbody-tr >td').addClass('div-error');
 
         // 货架点击事件
         $('.table-tbody > .table-tbody-tr  >td ').click(function () {
 
+            clickItem = $(this).parent().parent().parent().parent().attr('id');
+
+            clickItem = '#'+clickItem;
+
             // 判断可存放数 是否为0
-            setCountNum =  $('.ul-li-text >span').text();
+            setCountNum =  $(clickItem+'>ul>.ul-li-text >span').text();
 
             if ( setCountNum <= 0){
                 mui.alert('可存放数为0');
@@ -358,21 +375,21 @@
                 return false;
             }
 
-            if ($('td').is('.div-start') ){
+            if ( $(clickItem).find('.div-start').length > 0){
 
-                $('td').removeClass('div-start');
-                $('.start-num-div > input').val('');
+                $(clickItem).find('.div-start').removeClass('div-start');
+
+                $(clickItem+'>.start-num-div > input').val('');
 
                 $(this).addClass('div-start');
-                $('.start-num-div > input').val($(this).text());
+                $(clickItem+'>.start-num-div > input').val( $(this).text() );
 
             }else{
-
                 $(this).addClass('div-start');
-                $('.start-num-div > input').val($(this).text());
+                $(clickItem+'>.start-num-div > input').val($(this).text());
             }
 
-            $('.setKey > input').focus()
+            $( clickItem+'>.setKey > input').focus()
 
         });
 
@@ -380,12 +397,30 @@
         $('.setKey > input').keypress(function(){
             if (event.keyCode == 13){
 
-                var saveVal = checkNull(1);
+                // 如果 没有选择开始 货架号,则默认第一个 div-success
+
+                var saveVal = checkEmpty( $(this).val() ,'托盘号');
 
                 if (saveVal == false){
                     return false;
                 }
 
+                keyboardParendId = $(this).parent().parent().attr('id');
+
+                aa = $(keyboardParendId > '.div-start');
+
+                console.log(aa);
+                return;
+
+                if ( $(clickItem+'>.start-num-div > input').val() == '' ){
+
+                    mui.alert('no');
+                    return;
+
+                }
+
+                mui.alert('dd');
+                return;
                 addData();
             }
 
@@ -406,31 +441,8 @@
         // 获取货架中详细信息
         function set() {
 
-            var data = {"code":0,"message":[
-                    {"AI02RACK":"F2B011","AI02ROW":1,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-                    {"AI02RACK":"F2B021","AI02ROW":2,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-                    {"AI02RACK":"F2B031","AI02ROW":3,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-                    {"AI02RACK":"F2B041","AI02ROW":4,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-                    {"AI02RACK":"F2B051","AI02ROW":5,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-                    {"AI02RACK":"F2B061","AI02ROW":6,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-                    {"AI02RACK":"F2B071","AI02ROW":7,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-
-                    {"AI02RACK":"F2B012","AI02ROW":1,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-                    {"AI02RACK":"F2B022","AI02ROW":2,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-                    {"AI02RACK":"F2B032","AI02ROW":3,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-                    {"AI02RACK":"F2B042","AI02ROW":4,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-                    {"AI02RACK":"F2B052","AI02ROW":5,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-                    {"AI02RACK":"F2B062","AI02ROW":6,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-                    {"AI02RACK":"F2B072","AI02ROW":7,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-
-                    {"AI02RACK":"F2B013","AI02ROW":1,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-                    {"AI02RACK":"F2B023","AI02ROW":2,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-                    {"AI02RACK":"F2B033","AI02ROW":3,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-                    {"AI02RACK":"F2B043","AI02ROW":4,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-                    {"AI02RACK":"F2B053","AI02ROW":5,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-                    {"AI02RACK":"F2B063","AI02ROW":6,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-                    {"AI02RACK":"F2B073","AI02ROW":7,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},
-                ]};
+            var data =
+                {"code":0,"message":[{"AI02RACK":"F2B011","AI02ROW":1,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B021","AI02ROW":2,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B031","AI02ROW":3,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B041","AI02ROW":4,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B051","AI02ROW":5,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B061","AI02ROW":6,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B071","AI02ROW":7,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B081","AI02ROW":8,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B091","AI02ROW":9,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B101","AI02ROW":10,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B111","AI02ROW":11,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B121","AI02ROW":12,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B131","AI02ROW":13,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B141","AI02ROW":14,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B151","AI02ROW":15,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B161","AI02ROW":16,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B171","AI02ROW":17,"AI02LAYER":1,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B012","AI02ROW":1,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B022","AI02ROW":2,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B032","AI02ROW":3,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B042","AI02ROW":4,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B052","AI02ROW":5,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B062","AI02ROW":6,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B072","AI02ROW":7,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B082","AI02ROW":8,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B092","AI02ROW":9,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B102","AI02ROW":10,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B112","AI02ROW":11,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B122","AI02ROW":12,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B132","AI02ROW":13,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B142","AI02ROW":14,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B152","AI02ROW":15,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B162","AI02ROW":16,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B172","AI02ROW":17,"AI02LAYER":2,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B013","AI02ROW":1,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B023","AI02ROW":2,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B033","AI02ROW":3,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B043","AI02ROW":4,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B053","AI02ROW":5,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B063","AI02ROW":6,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B073","AI02ROW":7,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B083","AI02ROW":8,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B093","AI02ROW":9,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B103","AI02ROW":10,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B113","AI02ROW":11,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B123","AI02ROW":12,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B133","AI02ROW":13,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B143","AI02ROW":14,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B153","AI02ROW":15,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B163","AI02ROW":16,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""},{"AI02RACK":"F2B173","AI02ROW":17,"AI02LAYER":3,"STATUS":"A","AI02IPROD":"","AI02PALLET":"","AI02LOT":""}]};
 
             countNum = 0;
             list = data.message;
@@ -439,56 +451,82 @@
             count = 0;
             trLine = 0;
             setClass = '';
+            setNum = 0;
 
             for (i=0;i<list.length;i++){
 
                 //判断属于 第几个
                 setLine =  parseInt(list[i]['AI02LAYER']);
 
+                // 如果不等于 本层，则重新计数
+                if (setLine != lastLine){
+
+                    lastLine = 0;
+                    count = 0;
+                    trLine = 0;
+                    setClass = '';
+                    lastLine = setLine;
+                    setNum = 0;
+
+                }
+
+                // 切割字符串aa
                 setValue = list[i]['AI02RACK'];
 
-                setDiv = '<td>'+setValue+'</td>';
+                setValue = setValue.substr(3);
+                typeClass ='';
 
-                if (count == 0 ){
+                // 判断状态
+                if ( list[i]['STATUS'] == 'A' ){
+
+                    // 无值 为可用  有值为不可用
+                    if (list[i]['AI02PALLET'] == ''){
+                        typeClass  = 'div-success';
+                        setNum  = setNum+1;
+
+                    }else{
+                        typeClass  = 'div-error';
+                    }
+
+                }else{
+                    typeClass  = 'div-unable';
+                }
+
+                setDiv = '<td class='+typeClass+'>'+setValue+'</td>';
+
+                if ( count == 0 ){
 
                     setTr = '<tr class="table-tbody-tr" align="center">';
 
                     setTrEnd = '</tr>';
 
                     setDiv = setTr + setDiv + setTrEnd;
-                    count = count + 1;
-                    if (count  == 7){
-                        count = 0;
-                        trLine = trLine+1 ;
-                    }
+
+                    setClass ='';
 
                 }else{
-                    setClass = ' > table-tbody-tr:eq('+trLine+')';
+                    setClass = ' > .table-tbody-tr:eq('+trLine+')';
                 }
 
-                $('#item'+ setLine+'> table>tbody'+setClass ).append(setDiv);
+                count = count + 1;
+                if (count  == 7){
+                    count = 0;
+                    trLine = trLine+1 ;
+                }
 
+                $('#item'+ setLine+' > table>tbody'+setClass ).append(setDiv);
+                // 统计可存放数
+                $('#item'+ setLine+' > ul>li> span' ).text(setNum);
             }
 
-
-            return;
-
-            // 统计共有多少可上架的数量
-            $('.ul-li-text >span').text(countNum);
-
-            if (countNum == 0){
-                mui.alert('此货架已满');
-                return false;
-            }
         }
-
 
 
         // 货物存放
         function addData() {
 
             //获取还可添加的数量
-            sount = $('.div-success').length;
+            sount = $(clickTr+'>.div-success').length;
 
             if (sount == 0 || sount == null){
                 mui.alert('货架已经放满');
@@ -505,28 +543,31 @@
 
             //添加一条 并修改class 并添加到 列表下
 
-            selectDiv = $('.div-success:eq('+countSetArr[0]+')');
-            nextSelectDiv = $('.div-success:eq('+countSetArr[1]+')').text();
+            selectDiv = $(clickTr+'>.div-success:eq('+countSetArr[0]+')');
+            nextSelectDiv = $(clickTr+'>.div-success:eq('+countSetArr[1]+')').text();
             //删除class
 
             selectDiv.removeClass('div-success').addClass('div-selected');
 
             var setListNum = selectDiv.text();
 
-            countNum = $('.ul-li-text >span').text();
+            countNum = $(clickItem+'>ul > .ul-li-text >span').text();
+
+
             // 统计共有多少可上架的数量
-            countNum = countNum-1;
-            $('.ul-li-text >span').text(countNum);
+            countNum = parseInt(countNum)-1;
+
+            $(clickItem+'>ul > .ul-li-text >span').text(countNum);
 
             //要显示的行号
-            setCountNum =  $('.show-div > .mui-input-row').length;
-            setNum = $('.setKey > input').val();
+            setCountNum =  $(clickItem+'>.show-div > .mui-input-row').length;
+            setNum = $(clickItem+'>.setKey > input').val();
 
             if (nextSelectDiv ==''){
                 nextSelectDiv = '无';
             }
 
-            $('.start-num-div > input').val(nextSelectDiv);
+            $(clickItem+'> .start-num-div > input').val(nextSelectDiv);
 
             // 添加数据
             var setList =
@@ -538,10 +579,10 @@
                     '</p>'+
                 '</div>';
 
-            $('.show-div').append(setList);
+            $(clickItem+'>.show-div').append(setList);
 
             //清空输入框
-            $('.setKey > input').val('');
+            $(clickItem+'>.setKey > input').val('');
         }
 
 
@@ -570,8 +611,9 @@
          * 判断 不在其位置或其后的 货架 是否存在
          */
         function checkSetOne() {
+
             //获取起始位置
-            startNum =  $('.div-start').text();
+            startNum =  $(clickTr+'>.div-start').text();
 
             countSetNum = 0;
             countSetArr = new Array();
@@ -579,7 +621,7 @@
             // 获取其实位置后可添加的数量
             for ( i=0;i<sount; i++ ){
 
-                selectDiv = $('.div-success:eq('+i+') ').text();
+                selectDiv = $(clickTr+'>.div-success:eq('+i+') ').text();
 
                 // 判断过滤掉 不在其位置或其后的 货架
                 if ( selectDiv >= startNum ){
@@ -589,7 +631,6 @@
                 }
 
             }
-
         }
 
 
@@ -661,10 +702,12 @@
             return dataArr;
         }
 
-        function checkEmpty(value) {
+        function checkEmpty(value,msg) {
             if (value == null || value ==''){
-                mui.alert('不能有空值');
+                mui.alert(msg+'不能为空');
+                return false;
             }
+            return true;
         }
 
         /**
