@@ -118,12 +118,23 @@ class IndexController extends Controller {
         $this->display();
     }
 
+
+    /**
+     * 完成品入库 前搜索
+     */
+    public function inv002S(){
+        $this->display();
+    }
+
+
     /**
      * 完成品入库
      */
     public function inv002(){
         $this->display();
     }
+
+
 
 
     /**
