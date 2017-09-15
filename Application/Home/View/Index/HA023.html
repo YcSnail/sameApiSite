@@ -36,28 +36,29 @@
                 <form class="mui-input-group">
                     <div class="mui-input-row">
                         <label>设备类型</label>
-                        <input type="text" class="mui-input-clear" placeholder="电费">
-                        <input type="text" class="mui-input-clear div-none" placeholder="类型">
+                        <input type="text" class="mui-input-clear" id="type" placeholder="电费">
+                        <input type="text" class="mui-input-clear div-none" id="h23type" placeholder="类型">
                     </div>
                     <div class="mui-input-row">
                         <label>设备编号</label>
-                        <input type="text" class="mui-input-clear" placeholder="XX设备">
+                        <input type="text" class="mui-input-clear" id="h23code" placeholder="XX设备">
                     </div>
                     <div class="mui-input-row">
                         <label>设备描述</label>
-                        <input type="text" class="mui-input-clear" placeholder="设备描述">
+                        <input type="text" class="mui-input-clear" id="h23desc" placeholder="设备描述">
                     </div>
+
                     <div class="mui-input-row">
                         <label>设备位置</label>
                         <input type="text" class="mui-input-clear" placeholder="XXBUMENXXXXXXXX">
                     </div>
                     <div class="mui-input-row">
                         <label>采集日期</label>
-                        <input id="Time" type="text" class="mui-input-clear"  readonly="readonly" placeholder="选择日期">
+                        <input id="h23date" type="text" class="mui-input-clear"  readonly="readonly" placeholder="选择日期">
                     </div>
                     <div class="mui-input-row">
                         <label>上次读数</label>
-                        <input type="text" class="mui-input-clear" placeholder="198">
+                        <input type="text" class="mui-input-clear" id="h23nums" placeholder="198">
                     </div>
                     <div class="mui-input-row">
                         <label>本次读数</label>
@@ -65,25 +66,22 @@
                     </div>
                     <div class="mui-input-row div-none">
                         <label>员工ID</label>
-                        <input type="text" class="mui-input-clear" placeholder="员工ID">
+                        <input type="text" class="mui-input-clear" id="h23empId" placeholder="员工ID">
                     </div>
                     <div class="mui-input-row div-none">
                         <label>员工姓名</label>
-                        <input type="text" class="mui-input-clear" placeholder="员工姓名">
+                        <input type="text" class="mui-input-clear" id="h23empName" placeholder="员工姓名">
                     </div>
 
-
+                    <div class="mui-input-row div-none">
+                        <label>设备ID</label>
+                        <input type="text" class="mui-input-clear" id="id" placeholder="员工姓名">
+                    </div>
 
                     <div class="mui-button-row">
                         <button type="button" class="mui-btn mui-btn-primary" >记录</button>
                     </div>
                 </form>
-
-                <ul class="mui-table-view">
-                    <li class="mui-table-view-cell div-none">
-                        <span>name001</span><span class="span-text-two">13-8月 -17</span>
-                    </li>
-                </ul>
 
             </div>
 
@@ -104,7 +102,7 @@
         /**
          * 日期选择
          */
-        $("#Time").click(function () {
+        $("#h23date").click(function () {
 
             var dtpicker = new mui.DtPicker({
                 type: "datetime",//设置日历初始视图模式
@@ -114,19 +112,20 @@
             });
 
             dtpicker.show(function (items) {
-                $("#Time").val(items.value);
+                $("#h23date").val(items.value);
             });
         });
 
 
-//        getLastNum(); //获取最后一条数据
+        getLastNum(); //获取最后一条数据
 
         function getLastNum() {
 
             // 获取最近一条记录, 用于存储上次电表数
             url =  "{:U('Index/ajax')}";
             h23code = "{$h22code}";
-            mui.post(
+
+            $.post(
                 url,
                 {
                     "code":"APPHA023_5",
@@ -136,27 +135,30 @@
 
                     if (data.code == 0){
 
+                        setData = data.message[0];
+
                         // 设备类型
-                        var type = checkTyepe(data.message[0].H23TYPE);
+                        var type = checkTyepe(setData.H23TYPE);
                         // 写入 数据
-                        $('.mui-input-group > .mui-input-row:eq(0) > input:eq(0)').val(type);//设备类型
-                        $('.mui-input-group > .mui-input-row:eq(0) > input:eq(1)').val(data.message[0].H23TYPE);//设备类型
+                        $('#id').val(setData.ID);//设备ID
+                        $('#type').val(type);//设备类型
+                        $('#h23type').val(setData.H23TYPE);//设备类型
 
-                        $('.mui-input-group > .mui-input-row:eq(1) > input').val(data.message[0].H23CODE);//设备编号
-                        $('.mui-input-group > .mui-input-row:eq(2) > input').val(data.message[0].H23DESC);//设备描述
-                        $('.mui-input-group > .mui-input-row:eq(3) > input').val(data.message[0].H23NUMS);//上次读数
+                        $('#seq').val(setData.SEQ);//设备类型
 
-                        $('.mui-input-group > .mui-input-row:eq(7) > input').val(data.message[0].H23EMPID);//员工ID
-                        $('.mui-input-group > .mui-input-row:eq(8) > input').val(data.message[0].H23EMPNAME);//员工姓名
+                        $('#h23code').val(setData.H23CODE);//设备编号
+                        $('#h23desc').val(setData.H23DESC);//设备描述
+                        $('#h23nums').val(setData.H23NUMS);//上次读数
 
-                        $('.mui-input-group > .mui-input-row:eq(9) > input').val(data.message[0].ID);//设备ID
-
+                        $('#h23empId').val(setData.H23EMPID);//员工ID
+                        $('#h23empName').val(setData.H23EMPNAME);//员工姓名
+                        $('#h23date').val(setData.H23DATE);//采集时间
 
                     }
                     else{
                         mui.alert('获取最近一条记录失败');
                     }
-                }
+                },'json'
             );
 
         }
@@ -171,15 +173,17 @@
         // 保存数据
         function saveData() {
 
-
             //循环获取数据
             dataArr = forData();
+
+
+            console.log(dataArr);
+            return;
 
             url =  "{:U('Index/ajax')}";
             mui.post(
                 url,
                 {
-
                     'code':'APPHA023_1',
 
                     'h23code':dataArr[1],//设备编号
@@ -256,27 +260,23 @@
         //循环获取数据
         function forData() {
 
-            var dataArr = Array();
+            var dataArr = new Array();
 
-            for (i=0;i<=9;i++){
+            idArr = new Array('h23code','h23desc','h23date','h23nums','h23empId','h23empName','id','h23type');
 
-                dataArr[i] = $('.mui-input-group > .mui-input-row:eq('+i+') > input').val();
+            for (i=0;i<idArr.length;i++){
 
-                if (dataArr[i] == null || dataArr[i] == '' ){
-                    message = $('.mui-input-group > .mui-input-row:eq('+i+') > label').text();
-                    mui.alert(message+'不能为空');
-                    return;
+                dataArr[i] = $('#'+idArr[i]).val();
+
+                if (dataArr[i] == '' || dataArr[i] == undefined ){
+                    dataArr[i] = $('#'+idArr[i]).text();
                 }
 
-            }
+                if (dataArr[i] == '' || dataArr[i] == undefined ){
+                    mui.alert(idArr[i]+'为空');
+                    return false;
+                }
 
-            // 获取 设备类型
-            dataArr[11] = $('.mui-input-group > .mui-input-row:eq(0) > input:eq(1)').val();//设备类型
-
-            if (dataArr[11] == null || dataArr[11] == '' ){
-                message = $('.mui-input-group > .mui-input-row:eq(0) > label').text();
-                mui.alert(message+'不能为空,请重新获取');
-                return;
             }
 
             return dataArr;

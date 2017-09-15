@@ -3,12 +3,18 @@ namespace Home\Controller;
 use Think\Controller;
 class IndexController extends Controller {
 
+    protected $wsUrl = 'http://10.1.0.5:9099/soap?service=MyValeService';
+    protected $appId;
+    protected $appSecret;
+    protected $openId;
+    protected $ddConfig;
+    protected $userid;
 
-//    // 钉钉
-//    public function __construct(){
-//        parent::__construct();
-//
-//    }
+    // 钉钉
+    public function __construct(){
+        parent::__construct();
+
+    }
 
     public function index(){
         echo 'noting';
@@ -197,6 +203,9 @@ class IndexController extends Controller {
 
             $parames['h23code'] = $_POST['h23code'];
             $parames['code'] = 'APPHA023_1';
+
+            $data ='{"code":0,"message":[{"ID":"07F7650306494A70AA206951CCFE3229","SEQ":2,"H23TYPE":"A","H23CODE":"0009","H23POSITION":"position0001","H23DESC":"fsdfsdfsdf","H23NUMS":8,"H23DATE":"2017-08-13,13:25:59"}]}';
+            die($data);
         }else
 
         //保存设备记录

@@ -182,7 +182,7 @@
 
         // 用户没有待计时
         if (status == 1){
-            var createTime = '2017-08-01 14:45:00';
+            var createTime = '2017-09-15 13:00:00';
             var time = '';
 
             time = computingTime(createTime);
@@ -288,6 +288,9 @@
             // 格式化 时分秒,计算 分秒 差值
             nowTiemArr = nowTiemArr[1].split(':');
             createTimeArr = createTimeArr[1].split(':');
+
+            console.log(nowTiemArr);
+            console.log(createTimeArr);
 
             // 判断时间是否 符合规范 时间间隔不能超过1小时
             // 过滤时间
