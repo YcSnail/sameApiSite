@@ -171,6 +171,42 @@
         });
 
 
+        getDetile();
+
+        // 获取是否存在 未完成的任务
+        function getDetile() {
+
+            url =  "{:U('Index/ajax')}";
+
+            $.post(
+                url,
+                {
+                    "code":"APPHA021_1",
+                    "id":"1DF91C19502F41588CA5A0BDC7D2423D"
+
+                },function(data){
+
+                    if (data.code == 0){
+
+                        setData = data.message[0];
+
+                    }
+                    else{
+                        mui.alert(data.message);
+                    }
+                },'json'
+            );
+
+        }
+        
+        
+        setTimeDown();
+        
+        function setTimeDown() {
+            
+        }        
+
+
         // 设置 时间
         var min=0;
         var sec=1;
@@ -178,7 +214,7 @@
         var timer=null;
 
         //设置状态
-        var status = 1;
+        var status = 0;
 
         // 用户没有待计时
         if (status == 1){

@@ -10,12 +10,6 @@ class IndexController extends Controller {
     protected $ddConfig;
     protected $userid;
 
-    // 钉钉
-    public function __construct(){
-        parent::__construct();
-
-    }
-
     public function index(){
         echo 'noting';
         die();
@@ -161,14 +155,16 @@ class IndexController extends Controller {
 
         $parames = array();
 
+        $code = $_POST['code'];
+
         // EmpValidate用户验证 保存之前先拜访人是否存在
-        if ($_POST['code'] == 'EmpValidate'){
+        if ($code == 'EmpValidate'){
             $parames['code'] = 'EmpValidate';
             $parames['gname'] = $_POST['gname'];
         }else
 
         // 获取是否存在 cookie
-        if ($_POST['code'] == 'getCookie' ){
+        if ($code == 'getCookie' ){
 
             if (!empty($_COOKIE['userData'])){
                 $userData = json_decode($_COOKIE['userData'],true);
@@ -179,7 +175,7 @@ class IndexController extends Controller {
         }else
 
         // APPHA022_1 保存 访客信息
-        if ($_POST['code'] == 'APPHA022_1'){
+        if ($code == 'APPHA022_1'){
 
             $parames['h22name'] = $_POST['h22company'];
             $parames['h22company'] = $_POST['h22company'];
@@ -193,42 +189,64 @@ class IndexController extends Controller {
             $parames['h22emptel'] = $_POST['h22emptel'];
             $parames['h22code'] = $_POST['h22code'];
 
-            $parames['code'] = 'APPHA023_1';
+            $parames['code'] = 'APPHA022_1';
 
             $this->svavCookie($parames);
         }else
 
         // 设备获取最近一条记录
-        if ($_POST['code'] == 'APPHA023_5'){
+        if ($code == 'APPHA023_5'){
 
             $parames['h23code'] = $_POST['h23code'];
-            $parames['code'] = 'APPHA023_1';
+            $parames['code'] = 'APPHA023_5';
 
-            $data ='{"code":0,"message":[{"ID":"07F7650306494A70AA206951CCFE3229","SEQ":2,"H23TYPE":"A","H23CODE":"0009","H23POSITION":"position0001","H23DESC":"fsdfsdfsdf","H23NUMS":8,"H23DATE":"2017-08-13,13:25:59"}]}';
+            $data ='{"code":0,"message":[{"ID":"07F7650306494A70AA206951CCFE3229","SEQ":2,"H23TYPE":"A","H23CODE":"0009","H23POSITION":"position0001","H23DESC":"fsdfsdfsdf","H23NUMS":8,"H23DATE":"2017-08-13 13:25:59"}]}';
             die($data);
         }else
 
         //保存设备记录
-        if ($_POST['code'] == 'APPHA023_1'){
+        if ($code == 'APPHA023_1'){
 
-            $parames['code'] = $_POST['code'];
+            $parames['code'] = 'APPHA023_1';
+
             $parames['h23code'] = $_POST['h23code'];
             $parames['h23desc'] = $_POST['h23desc'];
             $parames['h23date'] = $_POST['h23date'];
-
             $parames['h23nums'] = $_POST['h23nums'];
             $parames['h23empid'] = $_POST['h23empid'];
             $parames['h23empname'] = $_POST['h23empname'];
             $parames['h23type'] = $_POST['h23type'];
+
+
+            $data = '{"code":0,"message":"Successful"}';
+
+            //{"code":-1,"message":" ******failure"}
+            die($data);
+
         }else
 
             //获取 最近保存的5条记录
-        if ($_POST['code'] == 'APPHA023_3'){
+        if ( $code == 'APPHA023_3') {
 
             $parames['code'] = $_POST['APPHA023_3'];
             $parames['h23code'] = $_POST['h23code'];
-        }
 
+            $data = '{"code": 0,"message": [{"ID": "1CB985FCB48A4BC9A089C433854A2E46","SEQ": 4,"STATUS": "A","CREATEDATE": "10-8月 -17","CREATEBY": "张三","CHANGEDATE": "10-8月 -17","CHANGEBY": "张三","FK_ID": "07F7650306494A70AA206951CCFE3229","H23TYPE": "A","H23CODE": "0009","H23DESC": "desc001","H23NUMS": 8,"H23DATE": "12-8月 -17","H23EMPID": "empid0001","H23EMPNAME": "name001","H23MEMO": "memo00001"},{"ID": "1CB985FCB48A4BC9A089C433854A2E46","SEQ": 3,"STATUS": "A","CREATEDATE": "10-8月 -17","CREATEBY": "张三","CHANGEDATE": "10-8月 -17","CHANGEBY": "张三","FK_ID": "07F7650306494A70AA206951CCFE3229","H23TYPE": "A","H23CODE": "0009","H23DESC": "desc001","H23NUMS": 8,"H23DATE": "09-8月 -17","H23EMPID": "empid0001","H23EMPNAME": "name001","H23MEMO": "memo00001"},{"ID": "1CB985FCB48A4BC9A089C433854A2E46","SEQ": 2,"STATUS": "A","CREATEDATE": "10-8月 -17","CREATEBY": "张三","CHANGEDATE": "10-8月 -17","CHANGEBY": "张三","FK_ID": "07F7650306494A70AA206951CCFE3229","H23TYPE": "A","H23CODE": "0009","H23DESC": "desc001","H23NUMS": 8,"H23DATE": "13-8月 -17","H23EMPID": "empid0001","H23EMPNAME": "name001","H23MEMO": "memo00001"},{"ID": "94C010C8F1244D64ACCD659A93476A6E","SEQ": 1,"STATUS": "A","CREATEDATE": "10-8月 -17","CREATEBY": "张三","CHANGEDATE": "10-8月 -17","CHANGEBY": "张三","FK_ID": "fsdfsdgsdgsdgsdg","H23TYPE": "A","H23CODE": "0009","H23DESC": "DESCSDFSDFSDF","H23NUMS": 8,"H23DATE": "08-8月 -17","H23EMPID": "empid0001","H23EMPNAME": "name001","H23MEMO": "memo00001"},{"ID": "71171313CB90471EAAAA0D10B00CA5B5","SEQ": 0,"STATUS": "A","CREATEDATE": "10-8月 -17","CREATEBY": "张三","CHANGEDATE": "10-8月 -17","CHANGEBY": "张三","FK_ID": "fsdfsdgsdgsdgsdg","H23TYPE": "A","H23CODE": "0009","H23DESC": "DESCSDFSDFSDF","H23NUMS": 8,"H23DATE": "08-8月 -17","H23EMPID": "empid0001","H23EMPNAME": "name001","H23MEMO": "memo00001"}]}';
+
+            die($data);
+
+        } else
+
+            // 获取 吸烟登记 状态
+        if ($code == 'APPHA021_1'){
+
+            $parames['code'] = 'APPHA021_1';
+            $parames['id'] = $_POST['id'];
+
+            $data  = '{"code": 0,"message": {"ID": "1DF91C19502F41588CA5A0BDC7D2423D","SEQ": 12,"STATUS": "A","CREATEDATE": "10-8月-17","CREATEBY": "张三","CHANGEDATE": "10-8月-17","CHANGEBY": "张三","H21CODE": "0009","H21EMPID": "empid0001","H21OPENID": "openid001","H21NAME": "name001","H21START": "08-8月-17","H21END": "08-8月-17","H21MEMO": "memo00001"}}';
+
+            die($data);
+        }
 
         $IndexLogic = D('Index','Logic');
         $dataRes = $IndexLogic->_getSoapData($parames);

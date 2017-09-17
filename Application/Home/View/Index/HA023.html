@@ -83,6 +83,16 @@
                     </div>
                 </form>
 
+                <div class="show-five-message div-none">
+
+                    <p style="text-align: center;font-size: 16px;color: #000">最近保存5条记录</p>
+                    <ul class="mui-table-view">
+                        <!--<li class="mui-table-view-cell div-none">-->
+                        <!--<span>name001</span><span class="span-text-two">13-8月 -17</span>-->
+                        <!--</li>-->
+                    </ul>
+                </div>
+
             </div>
 
         </div>
@@ -117,7 +127,8 @@
         });
 
 
-        getLastNum(); //获取最后一条数据
+        //获取最后一条数据
+        getLastNum();
 
         function getLastNum() {
 
@@ -176,35 +187,29 @@
             //循环获取数据
             dataArr = forData();
 
-
-            console.log(dataArr);
-            return;
-
             url =  "{:U('Index/ajax')}";
+
             mui.post(
                 url,
                 {
                     'code':'APPHA023_1',
 
-                    'h23code':dataArr[1],//设备编号
-                    'h23desc':dataArr[2],//设备描述
+                    'h23code':dataArr['h23code'],//设备编号
+                    'h23desc':dataArr['h23desc'],//设备描述
 
-                    'h23date':dataArr[4],//本次时间
-                    'h23nums':dataArr[6],//本次读数
-
-                    'h23empid':dataArr[7],//员工ID
-                    'h23empname':dataArr[8],//员工姓名
-                    'k_id':dataArr[9], //设备ID
-                    'h23type':dataArr[11]//设备类型
+                    'h23date':dataArr['h23date'],//本次时间
+                    'h23nums':dataArr['h23nums'],//本次读数
+                    'h23type':dataArr['h23type']//设备类型
 
                 },function(data){
 
                     if (data.code == 0){
-                        mui.alert('保存成功');
 
+
+                        mui.alert('保存成功');
                         //获取最近保存的5条记录
                         getFiveData();
-                        
+
                     }else{
                         mui.alert('保存失败,请重试!');
                     }
@@ -245,13 +250,14 @@
                                 '<span class="span-text-two">'+dd[12]+'</span>'+
                                 '</li>';
                         }
-                        $('.mui-table-view').append(list);
+
+                        $('.show-five-message > .mui-table-view').append(list);
+                        $('.show-five-message').removeClass('div-none')
 
                     }else{
                         mui.alert('获取最近五条记录失败');
                     }
-                }
-
+                },'json'
             );
 
         }
@@ -262,17 +268,17 @@
 
             var dataArr = new Array();
 
-            idArr = new Array('h23code','h23desc','h23date','h23nums','h23empId','h23empName','id','h23type');
+                idArr = new Array('h23code','h23type','h23desc','h23nums','h23date','id');
 
             for (i=0;i<idArr.length;i++){
 
-                dataArr[i] = $('#'+idArr[i]).val();
+                dataArr[idArr[i]] = $('#'+idArr[i]).val();
 
-                if (dataArr[i] == '' || dataArr[i] == undefined ){
-                    dataArr[i] = $('#'+idArr[i]).text();
+                if (dataArr[idArr[i]] == '' || dataArr[idArr[i]] == undefined ){
+                    dataArr[idArr[i]] = $('#'+idArr[i]).text();
                 }
 
-                if (dataArr[i] == '' || dataArr[i] == undefined ){
+                if (dataArr[idArr[i]] == '' || dataArr[idArr[i]] == undefined ){
                     mui.alert(idArr[i]+'为空');
                     return false;
                 }
